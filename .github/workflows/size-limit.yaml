@@ -1,0 +1,29 @@
+name: 'size'
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  react-size:
+    runs-on: ubuntu-latest
+    env:
+      CI_JOB_NUMBER: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - uses: andresz1/size-limit-action@35ea3c74377213d727b88532229d467a849345f4 # with pnpm support
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          script: pnpm --filter @livekit/components-react exec size-limit --json
+          package_manager: pnpm
+          build_script: build:react
