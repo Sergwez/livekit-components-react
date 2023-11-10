@@ -1,11 +1,11 @@
 {
-  "name": "@livekit/components-react",
+  "name": "@wezer/components-react-ru",
   "version": "1.4.0",
   "license": "Apache-2.0",
-  "author": "LiveKit",
+  "author": "wezer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/livekit/components-js.git",
+    "url": "https://github.com/Sergwez/livekit-components-react.git",
     "directory": "/packages/react"
   },
   "exports": {
