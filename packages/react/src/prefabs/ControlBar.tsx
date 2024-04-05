@@ -3,14 +3,16 @@ import * as React from 'react';
 import { MediaDeviceMenu } from './MediaDeviceMenu';
 import { DisconnectButton } from '../components/controls/DisconnectButton';
 import { TrackToggle } from '../components/controls/TrackToggle';
-import { StartAudio } from '../components/controls/StartAudio';
-import { ChatIcon, LeaveIcon } from '../assets/icons';
+import { ChatIcon, GearIcon, LeaveIcon } from '../assets/icons';
 import { ChatToggle } from '../components/controls/ChatToggle';
+import { BrandLogo } from '../components/brand/BrandLogo';
 import { useLocalParticipantPermissions, usePersistentUserChoices } from '../hooks';
 import { useMediaQuery } from '../hooks/internal';
 import { useMaybeLayoutContext } from '../context';
 import { supportsScreenSharing } from '@livekit/components-core';
 import { mergeProps } from '../utils';
+import { StartMediaButton } from '../components/controls/StartMediaButton';
+import { SettingsMenuToggle } from '../components/controls/SettingsMenuToggle';
 
 /** @public */
 export type ControlBarControls = {
@@ -19,6 +21,7 @@ export type ControlBarControls = {
   chat?: boolean;
   screenShare?: boolean;
   leave?: boolean;
+  settings?: boolean;
 };
 
 /** @public */
@@ -97,9 +100,12 @@ export function ControlBar({
 
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
 
-  const onScreenShareChange = (enabled: boolean) => {
-    setIsScreenShareEnabled(enabled);
-  };
+  const onScreenShareChange = React.useCallback(
+    (enabled: boolean) => {
+      setIsScreenShareEnabled(enabled);
+    },
+    [setIsScreenShareEnabled],
+  );
 
   const htmlProps = mergeProps({ className: 'lk-control-bar' }, props);
 
@@ -110,14 +116,27 @@ export function ControlBar({
     saveVideoInputDeviceId,
   } = usePersistentUserChoices({ preventSave: !saveUserChoices });
 
+  const microphoneOnChange = React.useCallback(
+    (enabled: boolean, isUserInitiated: boolean) =>
+      isUserInitiated ? saveAudioInputEnabled(enabled) : null,
+    [saveAudioInputEnabled],
+  );
+
+  const cameraOnChange = React.useCallback(
+    (enabled: boolean, isUserInitiated: boolean) =>
+      isUserInitiated ? saveVideoInputEnabled(enabled) : null,
+    [saveVideoInputEnabled],
+  );
+
   return (
-    <div {...htmlProps}>
+    <div style={{ position: 'relative' }} {...htmlProps}>
+      <BrandLogo />
       {visibleControls.microphone && (
         <div className="lk-button-group">
           <TrackToggle
             source={Track.Source.Microphone}
             showIcon={showIcon}
-            onChange={saveAudioInputEnabled}
+            onChange={microphoneOnChange}
           >
             {showText && 'Микрофон'}
           </TrackToggle>
@@ -131,11 +150,7 @@ export function ControlBar({
       )}
       {visibleControls.camera && (
         <div className="lk-button-group">
-          <TrackToggle
-            source={Track.Source.Camera}
-            showIcon={showIcon}
-            onChange={saveVideoInputEnabled}
-          >
+          <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}>
             {showText && 'Камера'}
           </TrackToggle>
           <div className="lk-button-group-menu">
@@ -153,7 +168,8 @@ export function ControlBar({
           showIcon={showIcon}
           onChange={onScreenShareChange}
         >
-          {showText && (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Начать демонстрацию экрана')}
+          {showText &&
+            (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Демонстрация экрана')}
         </TrackToggle>
       )}
       {visibleControls.chat && (
@@ -162,13 +178,19 @@ export function ControlBar({
           {showText && 'Чат'}
         </ChatToggle>
       )}
+      {visibleControls.settings && (
+        <SettingsMenuToggle>
+          {showIcon && <GearIcon />}
+          {showText && 'Settings'}
+        </SettingsMenuToggle>
+      )}
       {visibleControls.leave && (
         <DisconnectButton>
           {showIcon && <LeaveIcon />}
           {showText && 'Выход'}
         </DisconnectButton>
       )}
-      <StartAudio label="Start Audio" />
+      <StartMediaButton />
     </div>
   );
 }

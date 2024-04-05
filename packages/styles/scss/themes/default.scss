@@ -5,7 +5,7 @@ $fg: #fff;
 $danger: #f91f31;
 $success: #1ff968;
 $warning: #f9b11f;
-$accent: #1f8cf9;
+$accent: green;
 
 [data-theme='default'] {
   color-scheme: dark;
@@ -16,6 +16,7 @@ $accent: #1f8cf9;
   --bg4: #{color.adjust($bg, $lightness: 15%)};
   --bg5: #{color.adjust($bg, $lightness: 20%)};
 
+// control color text project
   --fg: #fff;
   --fg2: #{color.adjust($fg, $lightness: -4%)};
   --fg3: #{color.adjust($fg, $lightness: -8%)};
@@ -25,7 +26,7 @@ $accent: #1f8cf9;
   --border-color: rgba(255, 255, 255, 0.1);
 
   --accent-fg: #fff;
-  --accent-bg: #1f8cf9;
+  --accent-bg: #1f8cf9; // selecting a camera or microphone
   --accent2: #{color.adjust($accent, $lightness: 4%)};
   --accent3: #{color.adjust($accent, $lightness: 8%)};
   --accent4: #{color.adjust($accent, $lightness: 12%)};
@@ -61,4 +62,5 @@ $accent: #1f8cf9;
 
   --grid-gap: 0.5rem;
   --control-bar-height: 69px;
+  --chat-header-height: 69px;
 }

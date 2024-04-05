@@ -1,16 +1,16 @@
-import type { ChatMessage, MessageEncoder, MessageDecoder } from '@livekit/components-core';
+import type { ChatMessage, ChatOptions } from '@livekit/components-core';
 import * as React from 'react';
 import { useMaybeLayoutContext } from '../context';
 import { cloneSingleChild } from '../utils';
 import type { MessageFormatter } from '../components/ChatEntry';
 import { ChatEntry } from '../components/ChatEntry';
 import { useChat } from '../hooks/useChat';
+import { ChatToggle } from '../components';
+import { ChatCloseIcon } from '../assets/icons';
 
 /** @public */
-export interface ChatProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ChatProps extends React.HTMLAttributes<HTMLDivElement>, ChatOptions {
   messageFormatter?: MessageFormatter;
-  messageEncoder?: MessageEncoder;
-  messageDecoder?: MessageDecoder;
 }
 
 /**
@@ -25,13 +25,19 @@ export interface ChatProps extends React.HTMLAttributes<HTMLDivElement> {
  * ```
  * @public
  */
-export function Chat({ messageFormatter, messageDecoder, messageEncoder, ...props }: ChatProps) {
+export function Chat({
+  messageFormatter,
+  messageDecoder,
+  messageEncoder,
+  channelTopic,
+  ...props
+}: ChatProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
 
-  const chatOptions = React.useMemo(() => {
-    return { messageDecoder, messageEncoder };
-  }, [messageDecoder, messageEncoder]);
+  const chatOptions: ChatOptions = React.useMemo(() => {
+    return { messageDecoder, messageEncoder, channelTopic };
+  }, [messageDecoder, messageEncoder, channelTopic]);
 
   const { send, chatMessages, isSending } = useChat(chatOptions);
 
@@ -81,12 +87,19 @@ export function Chat({ messageFormatter, messageDecoder, messageEncoder, ...prop
 
   return (
     <div {...props} className="lk-chat">
+      <div className="lk-chat-header">
+        Messages
+        <ChatToggle className="lk-close-button">
+          <ChatCloseIcon />
+        </ChatToggle>
+      </div>
+
       <ul className="lk-list lk-chat-messages" ref={ulRef}>
         {props.children
           ? chatMessages.map((msg, idx) =>
               cloneSingleChild(props.children, {
                 entry: msg,
-                key: idx,
+                key: msg.id ?? idx,
                 messageFormatter,
               }),
             )
@@ -97,7 +110,7 @@ export function Chat({ messageFormatter, messageDecoder, messageEncoder, ...prop
 
               return (
                 <ChatEntry
-                  key={idx}
+                  key={msg.id ?? idx}
                   hideName={hideName}
                   hideTimestamp={hideName === false ? false : hideTimestamp} // If we show the name always show the timestamp as well.
                   entry={msg}
@@ -113,6 +126,9 @@ export function Chat({ messageFormatter, messageDecoder, messageEncoder, ...prop
           ref={inputRef}
           type="text"
           placeholder="Enter a message..."
+          onInput={(ev) => ev.stopPropagation()}
+          onKeyDown={(ev) => ev.stopPropagation()}
+          onKeyUp={(ev) => ev.stopPropagation()}
         />
         <button type="submit" className="lk-button lk-chat-form-button" disabled={isSending}>
           Send

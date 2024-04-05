@@ -19,16 +19,8 @@ import type { LocalUserChoices } from '@livekit/components-core';
 import { log } from '@livekit/components-core';
 import { ParticipantPlaceholder } from '../assets/images';
 import { useMediaDevices, usePersistentUserChoices } from '../hooks';
-
-const DEFAULT_USER_CHOICES: LocalUserChoices = {
-  username: '',
-  videoEnabled: true,
-  audioEnabled: true,
-  videoDeviceId: 'default',
-  audioDeviceId: 'default',
-  e2ee: false,
-  sharedPassphrase: '',
-};
+import { useWarnAboutMissingStyles } from '../hooks/useWarnAboutMissingStyles';
+import { defaultUserChoices } from '@livekit/components-core';
 
 /**
  * Props for the PreJoin component.
@@ -51,8 +43,6 @@ export interface PreJoinProps
   micLabel?: string;
   camLabel?: string;
   userLabel?: string;
-  /** @deprecated  E2EE options will be removed from PreJoin in a future version **/
-  showE2EEOptions?: boolean;
   /**
    * If true, user choices are persisted across sessions.
    * @defaultValue true
@@ -186,7 +176,7 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(
   }, []);
 
   React.useEffect(() => {
-    setSelectedDevice(devices.find((dev) => dev.deviceId === localDeviceId));
+    setSelectedDevice(devices?.find((dev) => dev.deviceId === localDeviceId));
   }, [localDeviceId, devices]);
 
   return {
@@ -217,15 +207,14 @@ export function PreJoin({
   onSubmit,
   onError,
   debug,
-  joinLabel = 'Join Room',
-  micLabel = 'Microphone',
-  camLabel = 'Camera',
-  userLabel = 'Username',
-  showE2EEOptions = false,
+  joinLabel = 'Войти в комнату',
+  micLabel = 'Микрофон',
+  camLabel = 'Камера',
+  userLabel = 'Введите ваше имя',
   persistUserChoices = true,
   ...htmlProps
 }: PreJoinProps) {
-  const [userChoices, setUserChoices] = React.useState(DEFAULT_USER_CHOICES);
+  const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
 
   // TODO: Remove and pipe `defaults` object directly into `usePersistentUserChoices` once we fully switch from type `LocalUserChoices` to `UserChoices`.
   const partialDefaults: Partial<LocalUserChoices> = {
@@ -259,11 +248,6 @@ export function PreJoin({
     initialUserChoices.videoDeviceId,
   );
   const [username, setUsername] = React.useState(initialUserChoices.username);
-  // TODO: Remove `e2ee` and `sharedPassphrase` once deprecated `LocalUserChoices` type is removed.
-  const [e2ee, setE2ee] = React.useState<boolean>(defaults.e2ee ?? DEFAULT_USER_CHOICES.e2ee);
-  const [sharedPassphrase, setSharedPassphrase] = React.useState<string>(
-    defaults.sharedPassphrase ?? DEFAULT_USER_CHOICES.sharedPassphrase,
-  );
 
   // Save user choices to persistent storage.
   React.useEffect(() => {
@@ -342,21 +326,10 @@ export function PreJoin({
       videoDeviceId,
       audioEnabled,
       audioDeviceId,
-      e2ee,
-      sharedPassphrase,
     };
     setUserChoices(newUserChoices);
     setIsValid(handleValidation(newUserChoices));
-  }, [
-    username,
-    videoEnabled,
-    handleValidation,
-    audioEnabled,
-    audioDeviceId,
-    videoDeviceId,
-    sharedPassphrase,
-    e2ee,
-  ]);
+  }, [username, videoEnabled, handleValidation, audioEnabled, audioDeviceId, videoDeviceId]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -368,6 +341,8 @@ export function PreJoin({
       log.warn('Validation failed with: ', userChoices);
     }
   }
+
+  useWarnAboutMissingStyles();
 
   return (
     <div className="lk-prejoin" {...htmlProps}>
@@ -431,30 +406,6 @@ export function PreJoin({
           onChange={(inputEl) => setUsername(inputEl.target.value)}
           autoComplete="off"
         />
-        {showE2EEOptions && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-              <input
-                id="use-e2ee"
-                type="checkbox"
-                checked={e2ee}
-                onChange={(ev) => setE2ee(ev.target.checked)}
-              ></input>
-              <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-            </div>
-            {e2ee && (
-              <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-                <label htmlFor="passphrase">Passphrase</label>
-                <input
-                  id="passphrase"
-                  type="password"
-                  value={sharedPassphrase}
-                  onChange={(ev) => setSharedPassphrase(ev.target.value)}
-                />
-              </div>
-            )}
-          </div>
-        )}
         <button
           className="lk-button lk-join-button"
           type="submit"
