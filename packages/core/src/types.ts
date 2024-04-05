@@ -2,15 +2,22 @@ import type { Participant, Track, TrackPublication } from 'livekit-client';
 import type { TrackReference, TrackReferenceOrPlaceholder } from './track-reference';
 
 // ## PinState Type
+/** @public */
 export type PinState = TrackReferenceOrPlaceholder[];
 export const PIN_DEFAULT_STATE: PinState = [];
 
 // ## WidgetState Types
+/** @public */
 export type WidgetState = {
   showChat: boolean;
   unreadMessages: number;
+  showSettings?: boolean;
 };
-export const WIDGET_DEFAULT_STATE: WidgetState = { showChat: false, unreadMessages: 0 };
+export const WIDGET_DEFAULT_STATE: WidgetState = {
+  showChat: false,
+  unreadMessages: 0,
+  showSettings: false,
+};
 
 // ## Track Source Types
 export type TrackSourceWithOptions = { source: Track.Source; withPlaceholder: boolean };
@@ -34,6 +41,7 @@ export type TrackReferenceFilter = Parameters<TrackReferenceOrPlaceholder[]['fil
 export type ParticipantFilter = Parameters<Participant[]['filter']>['0'];
 
 // ## Other Types
+/** @internal */
 export interface ParticipantClickEvent {
   participant: Participant;
   track?: TrackPublication;
@@ -44,10 +52,16 @@ export type TrackSource<T extends Track.Source> = RequireAtLeastOne<
   'name' | 'source'
 >;
 
+export type ParticipantTrackIdentifier = RequireAtLeastOne<
+  { sources: Track.Source[]; name: string; kind: Track.Kind },
+  'sources' | 'name' | 'kind'
+>;
+
 /**
  * The TrackIdentifier type is used to select Tracks either based on
  * - Track.Source and/or name of the track, e.g. `{source: Track.Source.Camera}` or `{name: "my-track"}`
  * - TrackReference (participant and publication)
+ * @internal
  */
 export type TrackIdentifier<T extends Track.Source = Track.Source> =
   | TrackSource<T>

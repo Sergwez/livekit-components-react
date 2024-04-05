@@ -10,6 +10,7 @@ import { ConnectionQuality } from 'livekit-client';
 import { ConnectionState } from 'livekit-client';
 import createEmailRegExp from 'email-regex';
 import { DataPacket_Kind } from 'livekit-client';
+import type { DataPublishOptions } from 'livekit-client';
 import { LocalAudioTrack } from 'livekit-client';
 import type { LocalParticipant } from 'livekit-client';
 import { LocalVideoTrack } from 'livekit-client';
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs';
 import type { Participant } from 'livekit-client';
 import { ParticipantEvent } from 'livekit-client';
 import type { ParticipantEventCallbacks } from 'livekit-client/dist/src/room/participant/Participant';
-import { ParticipantPermission } from 'livekit-client/dist/src/proto/livekit_models_pb';
+import type { ParticipantPermission } from '@livekit/protocol';
 import { RemoteParticipant } from 'livekit-client';
 import { Room } from 'livekit-client';
 import { RoomEvent } from 'livekit-client';
@@ -65,10 +66,20 @@ export type CaptureOptionsBySource<T extends ToggleSource> = T extends Track.Sou
 // @public (undocumented)
 export interface ChatMessage {
     // (undocumented)
+    id: string;
+    // (undocumented)
     message: string;
     // (undocumented)
     timestamp: number;
 }
+
+// @public (undocumented)
+export type ChatOptions = {
+    messageEncoder?: (message: ChatMessage) => Uint8Array;
+    messageDecoder?: (message: Uint8Array) => ReceivedChatMessage;
+    channelTopic?: string;
+    updateChannelTopic?: string;
+};
 
 // @public (undocumented)
 export function computeMenuPosition(button: HTMLElement, menu: HTMLElement): Promise<{
@@ -118,8 +129,10 @@ export function createInteractingObservable(htmlElement: HTMLElement | null, ina
 export function createIsSpeakingObserver(participant: Participant): Observable<boolean>;
 
 // @public (undocumented)
-export function createMediaDeviceObserver(kind?: MediaDeviceKind, requestPermissions?: boolean): Observable<MediaDeviceInfo[]>;
+export function createMediaDeviceObserver(kind?: MediaDeviceKind, onError?: (e: Error) => void, requestPermissions?: boolean): Observable<MediaDeviceInfo[]>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "createTrackObserver" is marked as @public, but its signature references "TrackIdentifier" which is marked as @internal
+//
 // @public (undocumented)
 export function createTrackObserver(participant: Participant, options: TrackIdentifier): Observable<{
     publication: TrackPublication | undefined;
@@ -134,15 +147,13 @@ export function createUrlRegExp(options: RegExOptions): RegExp;
 export const cssPrefix = "lk";
 
 // @public (undocumented)
-export type DataSendOptions = {
-    kind?: DataPacket_Kind;
-    destination?: string[];
+export const DataTopic: {
+    readonly CHAT: "lk-chat-topic";
+    readonly CHAT_UPDATE: "lk-chat-update-topic";
 };
 
 // @public (undocumented)
-export const DataTopic: {
-    readonly CHAT: "lk-chat-topic";
-};
+export const defaultUserChoices: LocalUserChoices;
 
 // @public (undocumented)
 export function encryptionStatusObservable(room: Room, participant: Participant): Observable<boolean>;
@@ -152,6 +163,8 @@ export function encryptionStatusObservable(room: Room, participant: Participant)
 // @internal
 export function getScrollBarWidth(): number;
 
+// Warning: (ae-incompatible-release-tags) The symbol "getTrackByIdentifier" is marked as @public, but its signature references "TrackIdentifier" which is marked as @internal
+//
 // @public (undocumented)
 export function getTrackByIdentifier(options: TrackIdentifier): TrackPublication | undefined;
 
@@ -184,9 +197,6 @@ export function isLocal(p: Participant): boolean;
 // @public
 export function isMobileBrowser(): boolean;
 
-// @public @deprecated
-export function isParticipantSourcePinned(participant: Participant, source: Track.Source, pinState: PinState | undefined): boolean;
-
 // @public
 export function isParticipantTrackReferencePinned(trackRef: TrackReference, pinState: PinState | undefined): boolean;
 
@@ -204,7 +214,9 @@ export function isSourcesWithOptions(sources: SourcesArray): sources is TrackSou
 // @public (undocumented)
 export function isSourceWitOptions(source: SourcesArray[number]): source is TrackSourceWithOptions;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "isTrackReference" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function isTrackReference(trackReference: unknown): trackReference is TrackReference;
 
 // @public
@@ -229,8 +241,6 @@ export type LocalUserChoices = {
     videoDeviceId: string;
     audioDeviceId: string;
     username: string;
-    e2ee: boolean;
-    sharedPassphrase: string;
 };
 
 // @public (undocumented)
@@ -265,7 +275,9 @@ export function observeRoomEvents(room: Room, ...events: RoomEvent[]): Observabl
 // @public (undocumented)
 export function observeTrackEvents(track: TrackPublication, ...events: TrackEvent_2[]): Observable<TrackPublication>;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ParticipantClickEvent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface ParticipantClickEvent {
     // (undocumented)
     participant: Participant;
@@ -310,6 +322,21 @@ export interface ParticipantMedia<T extends Participant = Participant> {
 export function participantPermissionObserver(participant: Participant): Observable<ParticipantPermission | undefined>;
 
 // @public (undocumented)
+export const participantTrackEvents: ParticipantEvent[];
+
+// Warning: (ae-forgotten-export) The symbol "RequireAtLeastOne" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type ParticipantTrackIdentifier = RequireAtLeastOne<{
+    sources: Track.Source[];
+    name: string;
+    kind: Track.Kind;
+}, 'sources' | 'name' | 'kind'>;
+
+// @public (undocumented)
+export function participantTracksObservable(participant: Participant, trackIdentifier: ParticipantTrackIdentifier): Observable<TrackReference[]>;
+
+// @public (undocumented)
 export const PIN_DEFAULT_STATE: PinState;
 
 // @public (undocumented)
@@ -317,6 +344,8 @@ export type PinState = TrackReferenceOrPlaceholder[];
 
 // @public (undocumented)
 export interface ReceivedChatMessage extends ChatMessage {
+    // (undocumented)
+    editTimestamp?: number;
     // (undocumented)
     from?: Participant;
 }
@@ -349,6 +378,11 @@ export function roomInfoObserver(room: Room): Observable<{
 // @public (undocumented)
 export function roomObserver(room: Room): Observable<Room>;
 
+// @public (undocumented)
+export function roomVideoPlaybackAllowedObservable(room: Room): Observable<{
+    canPlayVideo: boolean;
+}>;
+
 // @alpha
 export function saveUserChoices(userChoices: LocalUserChoices,
 preventSave?: boolean): void;
@@ -366,10 +400,16 @@ export type ScreenShareTrackMap = Array<{
 export function selectGridLayout(layouts: GridLayoutDefinition[], participantCount: number, width: number, height: number): GridLayoutDefinition;
 
 // @public
-export function sendMessage(localParticipant: LocalParticipant, payload: Uint8Array, topic?: string, options?: DataSendOptions): Promise<void>;
+export function sendMessage(localParticipant: LocalParticipant, payload: Uint8Array, options?: DataPublishOptions): Promise<void>;
 
 // @public (undocumented)
 export function setDifference<T>(setA: Set<T>, setB: Set<T>): Set<T>;
+
+// Warning: (ae-forgotten-export) The symbol "LogExtension" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "SetLogExtensionOptions" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function setLogExtension(extension: LogExtension, options?: SetLogExtensionOptions): void;
 
 // Warning: (ae-forgotten-export) The symbol "LogLevel" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "SetLogLevelOptions" needs to be exported by the entry point index.d.ts
@@ -383,14 +423,11 @@ export type SetMediaDeviceOptions = {
 };
 
 // @public (undocumented)
-export function setupChat(room: Room, options?: {
-    messageEncoder?: (message: ChatMessage) => Uint8Array;
-    messageDecoder?: (message: Uint8Array) => ReceivedChatMessage;
-}): {
+export function setupChat(room: Room, options?: ChatOptions): {
     messageObservable: Observable<ReceivedChatMessage[]>;
     isSendingObservable: BehaviorSubject<boolean>;
-    send: (message: string) => Promise<void>;
-    destroy: () => void;
+    send: (message: string) => Promise<ChatMessage>;
+    update: (message: string, messageId: string) => Promise<ChatMessage>;
 };
 
 // @public (undocumented)
@@ -410,14 +447,14 @@ export function setupConnectionQualityIndicator(participant: Participant): {
 };
 
 // @public (undocumented)
-export function setupDataMessageHandler<T extends string>(room: Room, topic?: T, onMessage?: (msg: ReceivedDataMessage<T>) => void): {
+export function setupDataMessageHandler<T extends string>(room: Room, topic?: T | [T, ...T[]], onMessage?: (msg: ReceivedDataMessage<T>) => void): {
     messageObservable: Observable<{
         payload: Uint8Array;
         topic: T;
         from: RemoteParticipant | undefined;
     }>;
     isSendingObservable: Observable<boolean>;
-    send: (payload: Uint8Array, options?: DataSendOptions) => Promise<void>;
+    send: (payload: Uint8Array, options?: DataPublishOptions) => Promise<void>;
 };
 
 // @public (undocumented)
@@ -446,7 +483,7 @@ export function setupLiveKitRoom(): {
 // @public (undocumented)
 export function setupManualToggle(): {
     className: string;
-    toggle: (forceState?: boolean) => void;
+    toggle: (forceState?: boolean) => Promise<void>;
     enabledObserver: Observable<boolean>;
     pendingObserver: Observable<boolean>;
 };
@@ -454,6 +491,8 @@ export function setupManualToggle(): {
 // @public (undocumented)
 export function setupMediaToggle<T extends ToggleSource>(source: T, room: Room, options?: CaptureOptionsBySource<T>): MediaToggleType<T>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "setupMediaTrack" is marked as @public, but its signature references "TrackIdentifier" which is marked as @internal
+//
 // @public (undocumented)
 export function setupMediaTrack(trackIdentifier: TrackIdentifier): {
     className: string;
@@ -484,6 +523,13 @@ export function setupStartAudio(): {
     className: string;
     roomAudioPlaybackAllowedObservable: typeof roomAudioPlaybackAllowedObservable;
     handleStartAudioPlayback: (room: Room) => Promise<void>;
+};
+
+// @public (undocumented)
+export function setupStartVideo(): {
+    className: string;
+    roomVideoPlaybackAllowedObservable: typeof roomVideoPlaybackAllowedObservable;
+    handleStartVideoPlayback: (room: Room) => Promise<void>;
 };
 
 // @public (undocumented)
@@ -518,7 +564,9 @@ export type TokenizeGrammar = {
     [type: string]: RegExp;
 };
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "TrackIdentifier" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export type TrackIdentifier<T extends Track.Source = Track.Source> = TrackSource<T> | TrackReference;
 
 // @public (undocumented)
@@ -555,8 +603,6 @@ export function trackReferencesObservable(room: Room, sources: Track.Source[], o
     participants: Participant[];
 }>;
 
-// Warning: (ae-forgotten-export) The symbol "RequireAtLeastOne" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type TrackSource<T extends Track.Source> = RequireAtLeastOne<{
     source: T;
@@ -588,6 +634,7 @@ export const WIDGET_DEFAULT_STATE: WidgetState;
 export type WidgetState = {
     showChat: boolean;
     unreadMessages: number;
+    showSettings?: boolean;
 };
 
 // (No @packageDocumentation comment for this package)

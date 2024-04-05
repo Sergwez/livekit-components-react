@@ -1,5 +1,31 @@
 # @livekit/components-styles
 
+## 1.0.11
+
+### Patch Changes
+
+- Use blue accent colour for stop screen share button - [#801](https://github.com/livekit/components-js/pull/801) ([@lukasIO](https://github.com/lukasIO))
+
+## 1.0.10
+
+### Patch Changes
+
+- Add support for a settings modal render prop - [#781](https://github.com/livekit/components-js/pull/781) ([@lukasIO](https://github.com/lukasIO))
+
+## 1.0.9
+
+### Patch Changes
+
+- Add possibility to edit/update chat messages - [#757](https://github.com/livekit/components-js/pull/757) ([@lukasIO](https://github.com/lukasIO))
+
+- Add styling for chat close button - [#756](https://github.com/livekit/components-js/pull/756) ([@lukasIO](https://github.com/lukasIO))
+
+## 1.0.8
+
+### Patch Changes
+
+- Emit missing style warning on VideoConference when in development mode - [#720](https://github.com/livekit/components-js/pull/720) ([@lukasIO](https://github.com/lukasIO))
+
 ## 1.0.7
 
 ### Patch Changes

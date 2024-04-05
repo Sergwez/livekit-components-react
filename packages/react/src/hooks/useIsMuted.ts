@@ -23,8 +23,6 @@ export interface UseIsMutedOptions {
  * @public
  */
 export function useIsMuted(trackRef: TrackReferenceOrPlaceholder): boolean;
-/** @public @deprecated This overload will be removed in a future version, pass in trackRef instead. */
-export function useIsMuted(source: Track.Source, options?: UseIsMutedOptions): boolean;
 export function useIsMuted(
   sourceOrTrackRef: TrackReferenceOrPlaceholder | Track.Source,
   options: UseIsMutedOptions = {},
@@ -37,7 +35,7 @@ export function useIsMuted(
       ? { participant: p, source: sourceOrTrackRef }
       : sourceOrTrackRef;
   const [isMuted, setIsMuted] = React.useState(
-    !!(ref.publication?.isMuted || p.getTrack(ref.source)?.isMuted),
+    !!(ref.publication?.isMuted || p.getTrackPublication(ref.source)?.isMuted),
   );
 
   React.useEffect(() => {

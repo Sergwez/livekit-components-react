@@ -16,6 +16,7 @@ export * from './components/mediaTrack';
 export * from './components/participantTile';
 export * from './components/chat';
 export * from './components/startAudio';
+export * from './components/startVideo';
 export * from './components/chatToggle';
 export * from './components/focusToggle';
 export * from './components/clearPinButton';
@@ -29,4 +30,4 @@ export * from './observables/dom-event';
 
 export * from './persistent-storage';
 
-export { log, setLogLevel } from './logger';
+export { log, setLogLevel, setLogExtension } from './logger';

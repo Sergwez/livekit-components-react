@@ -1,5 +1,55 @@
 # @livekit/components-core
 
+## 0.9.2
+
+### Patch Changes
+
+- Update livekit-client to 2.0.10 for Chrome 124 compatibility - [#806](https://github.com/livekit/components-js/pull/806) ([@davidzhao](https://github.com/davidzhao))
+
+## 0.9.1
+
+### Patch Changes
+
+- Add support for a settings modal render prop - [#781](https://github.com/livekit/components-js/pull/781) ([@lukasIO](https://github.com/lukasIO))
+
+## 0.9.0
+
+### Minor Changes
+
+- Remove previously deprecated APIs - [#774](https://github.com/livekit/components-js/pull/774) ([@lukasIO](https://github.com/lukasIO))
+
+- Update to livekit-client v2 - read the migration guide [here](https://docs.livekit.io/guides/migrate-from-v1/)https://docs.livekit.io/guides/migrate-from-v1/ - [#733](https://github.com/livekit/components-js/pull/733) ([@lukasIO](https://github.com/lukasIO))
+
+### Patch Changes
+
+- Initialize useMediaDevices useMediaDeviceSelect with empty array on error - [#770](https://github.com/livekit/components-js/pull/770) ([@lukasIO](https://github.com/lukasIO))
+
+## 0.8.3
+
+### Patch Changes
+
+- Add setLogExtension to core - [#728](https://github.com/livekit/components-js/pull/728) ([@mpnri](https://github.com/mpnri))
+
+- Pin all direct dependencies (Fixes an dependency resolve issue with a broken usehooks-ts release) - [#751](https://github.com/livekit/components-js/pull/751) ([@lukasIO](https://github.com/lukasIO))
+
+## 0.8.2
+
+### Patch Changes
+
+- Fix duplicate chat messages - [#718](https://github.com/livekit/components-js/pull/718) ([@lukasIO](https://github.com/lukasIO))
+
+## 0.8.1
+
+### Patch Changes
+
+- Add useStartVideo hook + update livekit client - [#714](https://github.com/livekit/components-js/pull/714) ([@lukasIO](https://github.com/lukasIO))
+
+- Add support for multiple chat windows - [#713](https://github.com/livekit/components-js/pull/713) ([@lukasIO](https://github.com/lukasIO))
+
+- Add StartMediaButton - [#717](https://github.com/livekit/components-js/pull/717) ([@lukasIO](https://github.com/lukasIO))
+
+- Add onError callback for MediaDeviceSelect - [#710](https://github.com/livekit/components-js/pull/710) ([@lukasIO](https://github.com/lukasIO))
+
 ## 0.8.0
 
 ### Minor Changes

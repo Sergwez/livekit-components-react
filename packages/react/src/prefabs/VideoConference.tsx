@@ -22,6 +22,7 @@ import { useCreateLayoutContext } from '../context';
 import { usePinnedTracks, useTracks } from '../hooks';
 import { Chat } from './Chat';
 import { ControlBar } from './ControlBar';
+import { useWarnAboutMissingStyles } from '../hooks/useWarnAboutMissingStyles';
 
 /**
  * @public
@@ -30,6 +31,8 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
   chatMessageFormatter?: MessageFormatter;
   chatMessageEncoder?: MessageEncoder;
   chatMessageDecoder?: MessageDecoder;
+  /** @alpha */
+  SettingsComponent?: React.ComponentType;
 }
 
 /**
@@ -54,11 +57,13 @@ export function VideoConference({
   chatMessageFormatter,
   chatMessageDecoder,
   chatMessageEncoder,
+  SettingsComponent,
   ...props
 }: VideoConferenceProps) {
   const [widgetState, setWidgetState] = React.useState<WidgetState>({
     showChat: false,
     unreadMessages: 0,
+    showSettings: false,
   });
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
 
@@ -112,6 +117,8 @@ export function VideoConference({
     focusTrack?.publication?.trackSid,
   ]);
 
+  useWarnAboutMissingStyles();
+
   return (
     <div className="lk-video-conference" {...props}>
       {isWeb() && (
@@ -137,7 +144,7 @@ export function VideoConference({
                 </FocusLayoutContainer>
               </div>
             )}
-            <ControlBar controls={{ chat: true }} />
+            <ControlBar controls={{ chat: true, settings: !!SettingsComponent }} />
           </div>
           <Chat
             style={{ display: widgetState.showChat ? 'grid' : 'none' }}
@@ -145,6 +152,14 @@ export function VideoConference({
             messageEncoder={chatMessageEncoder}
             messageDecoder={chatMessageDecoder}
           />
+          {SettingsComponent && (
+            <div
+              className="lk-settings-menu-modal"
+              style={{ display: widgetState.showSettings ? 'block' : 'none' }}
+            >
+              <SettingsComponent />
+            </div>
+          )}
         </LayoutContextProvider>
       )}
       <RoomAudioRenderer />

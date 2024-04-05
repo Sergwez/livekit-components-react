@@ -1,13 +1,14 @@
+import type { ParticipantPermission } from '@livekit/protocol';
 import type { Participant, RemoteParticipant, Room, TrackPublication } from 'livekit-client';
 import { ParticipantEvent, RoomEvent, Track } from 'livekit-client';
-import type { Subscriber } from 'rxjs';
-import { map, switchMap, Observable, startWith } from 'rxjs';
-import { observeRoomEvents } from './room';
 import type { ParticipantEventCallbacks } from 'livekit-client/dist/src/room/participant/Participant';
-import { allParticipantEvents, allParticipantRoomEvents } from '../helper/eventGroups';
-import type { TrackIdentifier } from '../types';
+import type { Subscriber } from 'rxjs';
+import { Observable, map, startWith, switchMap } from 'rxjs';
 import { getTrackByIdentifier } from '../components/mediaTrack';
-import { TrackReferenceOrPlaceholder } from '../track-reference';
+import { allParticipantEvents, allParticipantRoomEvents } from '../helper/eventGroups';
+import type { TrackReferenceOrPlaceholder } from '../track-reference';
+import type { TrackIdentifier } from '../types';
+import { observeRoomEvents } from './room';
 
 export function observeParticipantEvents<T extends Participant>(
   participant: T,
@@ -59,8 +60,8 @@ export function observeParticipantMedia<T extends Participant>(participant: T) {
   ).pipe(
     map((p) => {
       const { isMicrophoneEnabled, isCameraEnabled, isScreenShareEnabled } = p;
-      const microphoneTrack = p.getTrack(Track.Source.Microphone);
-      const cameraTrack = p.getTrack(Track.Source.Camera);
+      const microphoneTrack = p.getTrackPublication(Track.Source.Microphone);
+      const cameraTrack = p.getTrackPublication(Track.Source.Camera);
       const participantMedia: ParticipantMedia<T> = {
         isCameraEnabled,
         isMicrophoneEnabled,
@@ -153,12 +154,12 @@ export function mutedObserver(trackRef: TrackReferenceOrPlaceholder) {
     ParticipantEvent.LocalTrackUnpublished,
   ).pipe(
     map((participant) => {
-      const pub = trackRef.publication ?? participant.getTrack(trackRef.source);
+      const pub = trackRef.publication ?? participant.getTrackPublication(trackRef.source);
       return pub?.isMuted ?? true;
     }),
     startWith(
       trackRef.publication?.isMuted ??
-        trackRef.participant.getTrack(trackRef.source)?.isMuted ??
+        trackRef.participant.getTrackPublication(trackRef.source)?.isMuted ??
         true,
     ),
   );
@@ -183,7 +184,7 @@ export function connectedParticipantsObserver(
   const observable = new Observable<RemoteParticipant[]>((sub) => {
     subscriber = sub;
     return () => listener.unsubscribe();
-  }).pipe(startWith(Array.from(room.participants.values())));
+  }).pipe(startWith(Array.from(room.remoteParticipants.values())));
 
   const additionalRoomEvents = options.additionalRoomEvents ?? allParticipantRoomEvents;
 
@@ -196,11 +197,11 @@ export function connectedParticipantsObserver(
     ]),
   );
 
-  const listener = observeRoomEvents(room, ...roomEvents).subscribe(
-    (r) => subscriber?.next(Array.from(r.participants.values())),
+  const listener = observeRoomEvents(room, ...roomEvents).subscribe((r) =>
+    subscriber?.next(Array.from(r.remoteParticipants.values())),
   );
-  if (room.participants.size > 0) {
-    subscriber?.next(Array.from(room.participants.values()));
+  if (room.remoteParticipants.size > 0) {
+    subscriber?.next(Array.from(room.remoteParticipants.values()));
   }
   return observable;
 }
@@ -235,7 +236,9 @@ export function connectedParticipantObserver(
   return observable;
 }
 
-export function participantPermissionObserver(participant: Participant) {
+export function participantPermissionObserver(
+  participant: Participant,
+): Observable<ParticipantPermission | undefined> {
   const observer = participantEventSelector(
     participant,
     ParticipantEvent.ParticipantPermissionsChanged,

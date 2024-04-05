@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useChatToggle } from '../../hooks';
 
 /** @public */
-export interface ChatToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export type ChatToggleProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * The `ChatToggle` component is a button that toggles the visibility of the `Chat` component.

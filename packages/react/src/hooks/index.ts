@@ -17,8 +17,6 @@ export { UseLocalParticipantOptions, useLocalParticipant } from './useLocalParti
 export { useLocalParticipantPermissions } from './useLocalParticipantPermissions';
 export { UseMediaDeviceSelectProps, useMediaDeviceSelect } from './useMediaDeviceSelect';
 export { useMediaDevices } from './useMediaDevices';
-export { UseMediaTrackOptions, useMediaTrack } from './useMediaTrack';
-export { useMediaTrackByName } from './useMediaTrackByName';
 export { usePagination } from './usePagination';
 export { UseParticipantInfoOptions, useParticipantInfo } from './useParticipantInfo';
 export {
@@ -34,17 +32,21 @@ export { UseRoomInfoOptions, useRoomInfo } from './useRoomInfo';
 export { useSortedParticipants } from './useSortedParticipants';
 export { useSpeakingParticipants } from './useSpeakingParticipants';
 export { UseStartAudioProps, useStartAudio } from './useStartAudio';
+export { UseStartVideoProps, useStartVideo } from './useStartVideo';
 export { UseSwipeOptions, useSwipe } from './useSwipe';
 export { UseChatToggleProps, useChatToggle } from './useChatToggle';
 export { UseTokenOptions, UserInfo, useToken } from './useToken';
-export { UseTrackMutedIndicatorOptions, useTrackMutedIndicator } from './useTrackMutedIndicator';
+export { useTrackMutedIndicator } from './useTrackMutedIndicator';
 export { UseTrackToggleProps, useTrackToggle } from './useTrackToggle';
 export { UseTracksHookReturnType, UseTracksOptions, useTracks } from './useTracks';
 export { UseVisualStableUpdateOptions, useVisualStableUpdate } from './useVisualStableUpdate';
-export { UseTrackOptions, useTrack } from './useTrack';
+// export { UseTrackOptions, useTrack } from './useTrack';
 export { useTrackByName } from './useTrackByName';
 export { useChat } from './useChat';
 export {
   usePersistentUserChoices,
   type UsePersistentUserChoicesOptions,
 } from './usePersistentUserChoices';
+export { useIsEncrypted } from './useIsEncrypted';
+export * from './useTrackVolume';
+export * from './useParticipantTracks';

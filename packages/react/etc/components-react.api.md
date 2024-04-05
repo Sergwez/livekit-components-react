@@ -4,55 +4,35 @@
 
 ```ts
 
-/// <reference types="react" />
-
+import type { AudioAnalyserOptions } from 'livekit-client';
 import type { AudioCaptureOptions } from 'livekit-client';
-import type { AudioSource } from '@livekit/components-core';
-import { CaptureOptionsBySource } from '@livekit/components-core';
-import { ChatMessage } from '@livekit/components-core';
 import { ConnectionQuality } from 'livekit-client';
 import { ConnectionState as ConnectionState_2 } from 'livekit-client';
 import type { CreateLocalTracksOptions } from 'livekit-client';
-import type { DataSendOptions } from '@livekit/components-core';
-import type { GridLayoutDefinition } from '@livekit/components-core';
-import { HTMLAttributes } from 'react';
-import { isTrackReference } from '@livekit/components-core';
-import type { LocalAudioTrack } from 'livekit-client';
+import type { DataPublishOptions } from 'livekit-client';
+import type { HTMLAttributes } from 'react';
+import { LocalAudioTrack } from 'livekit-client';
 import { LocalParticipant } from 'livekit-client';
 import type { LocalTrack } from 'livekit-client';
 import { LocalTrackPublication } from 'livekit-client';
-import { LocalUserChoices } from '@livekit/components-core';
-import type { LocalVideoTrack } from 'livekit-client';
+import { LocalVideoTrack } from 'livekit-client';
 import type { MediaDeviceFailure } from 'livekit-client';
-import { MessageDecoder } from '@livekit/components-core';
-import { MessageEncoder } from '@livekit/components-core';
 import { Participant } from 'livekit-client';
-import type { ParticipantClickEvent } from '@livekit/components-core';
 import type { ParticipantEvent } from 'livekit-client';
-import { ParticipantPermission } from 'livekit-client/dist/src/proto/livekit_models_pb';
-import type { PinState } from '@livekit/components-core';
+import type { ParticipantPermission } from '@livekit/protocol';
 import * as React_2 from 'react';
-import { ReceivedChatMessage } from '@livekit/components-core';
-import type { ReceivedDataMessage } from '@livekit/components-core';
+import type { RemoteAudioTrack } from 'livekit-client';
 import { RemoteParticipant } from 'livekit-client';
 import { Room } from 'livekit-client';
 import type { RoomConnectOptions } from 'livekit-client';
 import type { RoomEvent } from 'livekit-client';
 import type { RoomOptions } from 'livekit-client';
 import type { ScreenShareCaptureOptions } from 'livekit-client';
-import { setLogLevel } from '@livekit/components-core';
-import { SetMediaDeviceOptions } from '@livekit/components-core';
-import type { SourcesArray } from '@livekit/components-core';
-import type { ToggleSource } from '@livekit/components-core';
+import { setLogLevel as setLogLevel_2 } from 'livekit-client';
+import type { SVGProps } from 'react';
 import { Track } from 'livekit-client';
-import type { TrackIdentifier } from '@livekit/components-core';
-import { TrackPublication } from 'livekit-client';
-import type { TrackReference } from '@livekit/components-core';
-import { TrackReferenceOrPlaceholder } from '@livekit/components-core';
-import type { TrackSourceWithOptions } from '@livekit/components-core';
+import type { TrackPublication } from 'livekit-client';
 import type { VideoCaptureOptions } from 'livekit-client';
-import type { VideoSource } from '@livekit/components-core';
-import type { WidgetState } from '@livekit/components-core';
 
 // @public (undocumented)
 export interface AllowAudioPlaybackProps extends React_2.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -68,36 +48,36 @@ export interface AudioConferenceProps extends React_2.HTMLAttributes<HTMLDivElem
 }
 
 // @public
-export function AudioTrack({ trackRef, onSubscriptionStatusChanged, volume, source, name, publication, participant: p, ...props }: AudioTrackProps): React_2.JSX.Element;
+export function AudioTrack({ trackRef, onSubscriptionStatusChanged, volume, ...props }: AudioTrackProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface AudioTrackProps extends React_2.AudioHTMLAttributes<HTMLAudioElement> {
     // @alpha
     muted?: boolean;
-    // @deprecated (undocumented)
-    name?: string;
     // (undocumented)
     onSubscriptionStatusChanged?: (subscribed: boolean) => void;
-    // @deprecated (undocumented)
-    participant?: Participant;
-    // @deprecated (undocumented)
-    publication?: TrackPublication;
-    // @deprecated (undocumented)
-    source?: Track.Source;
     trackRef?: TrackReference;
     volume?: number;
 }
 
 // @public
-export function AudioVisualizer({ participant, trackRef, ...props }: AudioVisualizerProps): React_2.JSX.Element;
+export function AudioVisualizer({ trackRef, ...props }: AudioVisualizerProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface AudioVisualizerProps extends React_2.HTMLAttributes<SVGElement> {
-    // @deprecated (undocumented)
-    participant?: Participant;
     // (undocumented)
-    trackRef?: TrackReferenceOrPlaceholder;
+    trackRef?: TrackReference;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "CameraDisabledIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const CameraDisabledIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "CameraIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const CameraIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function CarouselLayout({ tracks, orientation, ...props }: CarouselLayoutProps): React_2.JSX.Element;
@@ -111,11 +91,13 @@ export interface CarouselLayoutProps extends React_2.HTMLAttributes<HTMLMediaEle
     tracks: TrackReferenceOrPlaceholder[];
 }
 
-// @public @deprecated (undocumented)
-export const CarouselView: typeof CarouselLayout;
-
 // @public
-export function Chat({ messageFormatter, messageDecoder, messageEncoder, ...props }: ChatProps): React_2.JSX.Element;
+export function Chat({ messageFormatter, messageDecoder, messageEncoder, channelTopic, ...props }: ChatProps): React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "ChatCloseIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ChatCloseIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function ChatEntry({ entry, hideName, hideTimestamp, messageFormatter, ...props }: ChatEntryProps): React_2.JSX.Element;
@@ -128,14 +110,25 @@ export interface ChatEntryProps extends React_2.HTMLAttributes<HTMLLIElement> {
     messageFormatter?: MessageFormatter;
 }
 
-export { ChatMessage }
+// Warning: (ae-internal-missing-underscore) The name "ChatIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ChatIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public (undocumented)
-export interface ChatProps extends React_2.HTMLAttributes<HTMLDivElement> {
+export interface ChatMessage {
     // (undocumented)
-    messageDecoder?: MessageDecoder;
+    id: string;
     // (undocumented)
-    messageEncoder?: MessageEncoder;
+    message: string;
+    // (undocumented)
+    timestamp: number;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ChatOptions" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface ChatProps extends React_2.HTMLAttributes<HTMLDivElement>, ChatOptions {
     // (undocumented)
     messageFormatter?: MessageFormatter;
 }
@@ -146,6 +139,11 @@ export function ChatToggle(props: ChatToggleProps): React_2.JSX.Element;
 // @public (undocumented)
 export interface ChatToggleProps extends React_2.ButtonHTMLAttributes<HTMLButtonElement> {
 }
+
+// Warning: (ae-internal-missing-underscore) The name "Chevron" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const Chevron: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function ClearPinButton(props: ClearPinButtonProps): React_2.JSX.Element;
@@ -194,6 +192,7 @@ export type ControlBarControls = {
     chat?: boolean;
     screenShare?: boolean;
     leave?: boolean;
+    settings?: boolean;
 };
 
 // @public (undocumented)
@@ -224,43 +223,45 @@ export interface FeatureFlags {
 }
 
 // @public
-export function FocusLayout({ trackRef, track, ...htmlProps }: FocusLayoutProps): React_2.JSX.Element;
+export function FocusLayout({ trackRef, ...htmlProps }: FocusLayoutProps): React_2.JSX.Element;
 
 // @public
 export function FocusLayoutContainer(props: FocusLayoutContainerProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface FocusLayoutContainerProps extends React_2.HTMLAttributes<HTMLDivElement> {
-    // @deprecated (undocumented)
-    focusTrack?: TrackReference;
-    // @deprecated (undocumented)
-    participants?: Array<Participant>;
 }
 
 // @public (undocumented)
 export interface FocusLayoutProps extends React_2.HTMLAttributes<HTMLElement> {
+    // Warning: (ae-incompatible-release-tags) The symbol "onParticipantClick" is marked as @public, but its signature references "ParticipantClickEvent" which is marked as @internal
+    //
     // (undocumented)
     onParticipantClick?: (evt: ParticipantClickEvent) => void;
-    // @deprecated (undocumented)
-    track?: TrackReferenceOrPlaceholder;
     trackRef?: TrackReferenceOrPlaceholder;
 }
 
 // @public
-export function FocusToggle({ trackRef, trackSource, participant, ...props }: FocusToggleProps): React_2.JSX.Element;
+export function FocusToggle({ trackRef, ...props }: FocusToggleProps): React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "FocusToggleIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const FocusToggleIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public (undocumented)
 export interface FocusToggleProps extends React_2.ButtonHTMLAttributes<HTMLButtonElement> {
-    // @deprecated (undocumented)
-    participant?: Participant;
     // (undocumented)
     trackRef?: TrackReferenceOrPlaceholder;
-    // @deprecated (undocumented)
-    trackSource?: Track.Source;
 }
 
 // @public (undocumented)
 export function formatChatMessageLinks(message: string): React_2.ReactNode;
+
+// Warning: (ae-internal-missing-underscore) The name "GearIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const GearIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function GridLayout({ tracks, ...props }: GridLayoutProps): React_2.JSX.Element;
@@ -273,7 +274,10 @@ export interface GridLayoutProps extends React_2.HTMLAttributes<HTMLDivElement>,
     tracks: TrackReferenceOrPlaceholder[];
 }
 
-export { isTrackReference }
+// Warning: (ae-internal-missing-underscore) The name "isTrackReference" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function isTrackReference(trackReference: unknown): trackReference is TrackReference;
 
 // @public (undocumented)
 export const LayoutContext: React_2.Context<LayoutContextType | undefined>;
@@ -294,8 +298,13 @@ export interface LayoutContextProviderProps {
 // @public (undocumented)
 export type LayoutContextType = {
     pin: PinContextType;
-    widget: ChatContextType;
+    widget: WidgetContextType;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "LeaveIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const LeaveIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function LiveKitRoom(props: React_2.PropsWithChildren<LiveKitRoomProps>): React_2.JSX.Element;
@@ -311,6 +320,8 @@ export interface LiveKitRoomProps extends Omit<React_2.HTMLAttributes<HTMLDivEle
     onConnected?: () => void;
     // (undocumented)
     onDisconnected?: () => void;
+    // (undocumented)
+    onEncryptionError?: (error: Error) => void;
     // (undocumented)
     onError?: (error: Error) => void;
     // (undocumented)
@@ -330,7 +341,19 @@ export interface LiveKitRoomProps extends Omit<React_2.HTMLAttributes<HTMLDivEle
 // @internal (undocumented)
 export const LKFeatureContext: React_2.Context<FeatureFlags | undefined>;
 
-export { LocalUserChoices }
+// @public
+export type LocalUserChoices = {
+    videoEnabled: boolean;
+    audioEnabled: boolean;
+    videoDeviceId: string;
+    audioDeviceId: string;
+    username: string;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "LockLockedIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const LockLockedIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function MediaDeviceMenu({ kind, initialSelection, onActiveDeviceChange, tracks, requestPermissions, ...props }: MediaDeviceMenuProps): React_2.JSX.Element;
@@ -349,10 +372,10 @@ export interface MediaDeviceMenuProps extends React_2.ButtonHTMLAttributes<HTMLB
 }
 
 // @public
-export function MediaDeviceSelect({ kind, initialSelection, onActiveDeviceChange, onDeviceListChange, onDeviceSelectError, exactMatch, track, requestPermissions, ...props }: MediaDeviceSelectProps): React_2.JSX.Element;
+export function MediaDeviceSelect({ kind, initialSelection, onActiveDeviceChange, onDeviceListChange, onDeviceSelectError, exactMatch, track, requestPermissions, onError, ...props }: MediaDeviceSelectProps): React_2.JSX.Element;
 
 // @public (undocumented)
-export interface MediaDeviceSelectProps extends React_2.HTMLAttributes<HTMLUListElement> {
+export interface MediaDeviceSelectProps extends Omit<React_2.HTMLAttributes<HTMLUListElement>, 'onError'> {
     exactMatch?: boolean;
     // (undocumented)
     initialSelection?: string;
@@ -364,20 +387,55 @@ export interface MediaDeviceSelectProps extends React_2.HTMLAttributes<HTMLUList
     onDeviceListChange?: (devices: MediaDeviceInfo[]) => void;
     // (undocumented)
     onDeviceSelectError?: (e: Error) => void;
+    // (undocumented)
+    onError?: (e: Error) => void;
     requestPermissions?: boolean;
     // (undocumented)
     track?: LocalAudioTrack | LocalVideoTrack;
 }
 
-export { MessageDecoder }
+// @public (undocumented)
+export type MessageDecoder = (message: Uint8Array) => ReceivedChatMessage;
 
-export { MessageEncoder }
+// @public (undocumented)
+export type MessageEncoder = (message: ChatMessage) => Uint8Array;
 
 // @public (undocumented)
 export type MessageFormatter = (message: string) => React_2.ReactNode;
 
+// Warning: (ae-internal-missing-underscore) The name "MicDisabledIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const MicDisabledIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "MicIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const MicIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// @alpha
+export interface MultiBandTrackVolumeOptions {
+    // (undocumented)
+    analyserOptions?: AnalyserOptions;
+    // (undocumented)
+    bands?: number;
+    hiPass?: number;
+    loPass?: number;
+    updateInterval?: number;
+}
+
 // @public
-export function ParticipantAudioTile({ participant, children, source, publication, disableSpeakingIndicator, onParticipantClick, ...htmlProps }: ParticipantTileProps): React_2.JSX.Element;
+export function ParticipantAudioTile({ children, disableSpeakingIndicator, onParticipantClick, trackRef, ...htmlProps }: ParticipantTileProps): React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "ParticipantClickEvent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface ParticipantClickEvent {
+    // (undocumented)
+    participant: Participant;
+    // (undocumented)
+    track?: TrackPublication;
+}
 
 // @public (undocumented)
 export const ParticipantContext: React_2.Context<Participant | undefined>;
@@ -403,26 +461,30 @@ export function ParticipantName({ participant, ...props }: ParticipantNameProps)
 export interface ParticipantNameProps extends React_2.HTMLAttributes<HTMLSpanElement>, UseParticipantInfoOptions {
 }
 
+// Warning: (ae-internal-missing-underscore) The name "ParticipantPlaceholder" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ParticipantPlaceholder: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
 // @public
-export function ParticipantTile({ trackRef, participant, children, source, onParticipantClick, publication, disableSpeakingIndicator, ...htmlProps }: ParticipantTileProps): React_2.JSX.Element;
+export function ParticipantTile({ trackRef, children, onParticipantClick, disableSpeakingIndicator, ...htmlProps }: ParticipantTileProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface ParticipantTileProps extends React_2.HTMLAttributes<HTMLDivElement> {
     // (undocumented)
     disableSpeakingIndicator?: boolean;
+    // Warning: (ae-incompatible-release-tags) The symbol "onParticipantClick" is marked as @public, but its signature references "ParticipantClickEvent" which is marked as @internal
+    //
     // (undocumented)
     onParticipantClick?: (event: ParticipantClickEvent) => void;
-    // @deprecated (undocumented)
-    participant?: Participant;
-    // @deprecated (undocumented)
-    publication?: TrackPublication;
-    // @deprecated (undocumented)
-    source?: Track.Source;
     trackRef?: TrackReferenceOrPlaceholder;
 }
 
+// @public (undocumented)
+export type PinState = TrackReferenceOrPlaceholder[];
+
 // @public
-export function PreJoin({ defaults, onValidate, onSubmit, onError, debug, joinLabel, micLabel, camLabel, userLabel, showE2EEOptions, persistUserChoices, ...htmlProps }: PreJoinProps): React_2.JSX.Element;
+export function PreJoin({ defaults, onValidate, onSubmit, onError, debug, joinLabel, micLabel, camLabel, userLabel, persistUserChoices, ...htmlProps }: PreJoinProps): React_2.JSX.Element;
 
 // @public
 export interface PreJoinProps extends Omit<React_2.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
@@ -440,13 +502,37 @@ export interface PreJoinProps extends Omit<React_2.HTMLAttributes<HTMLDivElement
     onValidate?: (values: LocalUserChoices) => boolean;
     // @alpha
     persistUserChoices?: boolean;
-    // @deprecated (undocumented)
-    showE2EEOptions?: boolean;
     // (undocumented)
     userLabel?: string;
 }
 
-export { ReceivedChatMessage }
+// Warning: (ae-internal-missing-underscore) The name "QualityExcellentIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const QualityExcellentIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "QualityGoodIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const QualityGoodIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "QualityPoorIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const QualityPoorIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "QualityUnknownIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const QualityUnknownIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// @public (undocumented)
+export interface ReceivedChatMessage extends ChatMessage {
+    // (undocumented)
+    editTimestamp?: number;
+    // (undocumented)
+    from?: Participant;
+}
 
 // @public
 export function RoomAudioRenderer({ volume, muted }: RoomAudioRendererProps): React_2.JSX.Element;
@@ -470,16 +556,38 @@ export interface RoomNameProps extends React_2.HTMLAttributes<HTMLSpanElement> {
     childrenPosition?: 'before' | 'after';
 }
 
-export { setLogLevel }
+// Warning: (ae-internal-missing-underscore) The name "ScreenShareIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ScreenShareIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "ScreenShareStopIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ScreenShareStopIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "LogExtension" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "SetLogExtensionOptions" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function setLogExtension(extension: LogExtension, options?: SetLogExtensionOptions): void;
+
+// Warning: (ae-forgotten-export) The symbol "LogLevel" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "SetLogLevelOptions" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function setLogLevel(level: LogLevel, options?: SetLogLevelOptions): void;
+
+// Warning: (ae-internal-missing-underscore) The name "SpinnerIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const SpinnerIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @public
 export function StartAudio({ label, ...props }: AllowAudioPlaybackProps): React_2.JSX.Element;
 
 // @public
 export function Toast(props: React_2.HTMLAttributes<HTMLDivElement>): React_2.JSX.Element;
-
-// @public @deprecated (undocumented)
-export const TrackContext: React_2.Context<TrackReferenceOrPlaceholder | undefined>;
 
 // @public
 export function TrackLoop({ tracks, ...props }: TrackLoopProps): React_2.JSX.Element;
@@ -491,39 +599,55 @@ export interface TrackLoopProps {
 }
 
 // @public
-export function TrackMutedIndicator({ source, participant, trackRef, show, ...props }: TrackMutedIndicatorProps): React_2.JSX.Element | null;
+export function TrackMutedIndicator({ trackRef, show, ...props }: TrackMutedIndicatorProps): React_2.JSX.Element | null;
 
 // @public (undocumented)
 export interface TrackMutedIndicatorProps extends React_2.HTMLAttributes<HTMLDivElement> {
-    // @deprecated (undocumented)
-    participant?: Participant;
     // (undocumented)
     show?: 'always' | 'muted' | 'unmuted';
-    // @deprecated (undocumented)
-    source?: Track.Source;
     // (undocumented)
-    trackRef?: TrackReferenceOrPlaceholder;
+    trackRef: TrackReferenceOrPlaceholder;
 }
 
 // @public
 export const TrackRefContext: React_2.Context<TrackReferenceOrPlaceholder | undefined>;
 
+// @public (undocumented)
+export type TrackReference = {
+    participant: Participant;
+    publication: TrackPublication;
+    source: Track.Source;
+};
+
+// Warning: (ae-forgotten-export) The symbol "TrackReferencePlaceholder" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type TrackReferenceOrPlaceholder = TrackReference | TrackReferencePlaceholder;
+
+// Warning: (ae-forgotten-export) The symbol "ToggleSource" needs to be exported by the entry point index.d.ts
+//
 // @public
 export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: TrackToggleProps<T>): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface TrackToggleProps<T extends ToggleSource> extends Omit<React_2.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
+    // Warning: (ae-forgotten-export) The symbol "CaptureOptionsBySource" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     captureOptions?: CaptureOptionsBySource<T>;
     // (undocumented)
     initialState?: boolean;
-    // (undocumented)
-    onChange?: (enabled: boolean) => void;
+    onChange?: (enabled: boolean, isUserInitiated: boolean) => void;
     // (undocumented)
     showIcon?: boolean;
     // (undocumented)
     source: T;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "UnfocusToggleIcon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const UnfocusToggleIcon: (props: SVGProps<SVGSVGElement>) => React_2.JSX.Element;
 
 // @alpha
 export function useAudioPlayback(room?: Room): {
@@ -532,11 +656,9 @@ export function useAudioPlayback(room?: Room): {
 };
 
 // @public
-export function useChat(options?: {
-    messageEncoder?: MessageEncoder;
-    messageDecoder?: MessageDecoder;
-}): {
-    send: ((message: string) => Promise<void>) | undefined;
+export function useChat(options?: ChatOptions): {
+    send: ((message: string) => Promise<ChatMessage>) | undefined;
+    update: ((message: string, messageId: string) => Promise<ChatMessage>) | undefined;
     chatMessages: ReceivedChatMessage[];
     isSending: boolean;
 };
@@ -578,6 +700,7 @@ export function useConnectionState(room?: Room): ConnectionState_2;
 // @public (undocumented)
 export function useCreateLayoutContext(): LayoutContextType;
 
+// Warning: (ae-forgotten-export) The symbol "ReceivedDataMessage" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "UseDataChannelReturnType" needs to be exported by the entry point index.d.ts
 //
 // @public
@@ -610,9 +733,6 @@ export function useEnsureRoom(room?: Room): Room;
 // @public
 export function useEnsureTrackRef(trackRef?: TrackReferenceOrPlaceholder): TrackReferenceOrPlaceholder;
 
-// @public @deprecated
-export function useEnsureTrackReference(track?: TrackReferenceOrPlaceholder): TrackReferenceOrPlaceholder;
-
 // @alpha
 export function useFacingMode(trackReference: TrackReferenceOrPlaceholder): 'user' | 'environment' | 'left' | 'right' | 'undefined';
 
@@ -623,7 +743,7 @@ export function useFacingMode(trackReference: TrackReferenceOrPlaceholder): 'use
 export function useFeatureContext<T extends boolean>(require?: T): FeatureContext<T>;
 
 // @public
-export function useFocusToggle({ trackRef, trackSource, participant, props }: UseFocusToggleProps): {
+export function useFocusToggle({ trackRef, props }: UseFocusToggleProps): {
     mergedProps: React_2.ButtonHTMLAttributes<HTMLButtonElement> & {
         className: string;
         onClick: (event: React_2.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -633,14 +753,10 @@ export function useFocusToggle({ trackRef, trackSource, participant, props }: Us
 
 // @public (undocumented)
 export interface UseFocusToggleProps {
-    // @deprecated (undocumented)
-    participant?: Participant;
     // (undocumented)
     props: React_2.ButtonHTMLAttributes<HTMLButtonElement>;
     // (undocumented)
     trackRef?: TrackReferenceOrPlaceholder;
-    // @deprecated (undocumented)
-    trackSource?: Track.Source;
 }
 
 // @public
@@ -650,11 +766,11 @@ trackCount: number): {
     layout: GridLayoutDefinition;
 };
 
+// @alpha (undocumented)
+export function useIsEncrypted(participant?: Participant): boolean;
+
 // @public
 export function useIsMuted(trackRef: TrackReferenceOrPlaceholder): boolean;
-
-// @public @deprecated (undocumented)
-export function useIsMuted(source: Track.Source, options?: UseIsMutedOptions): boolean;
 
 // @public (undocumented)
 export interface UseIsMutedOptions {
@@ -703,19 +819,17 @@ export function useMaybeParticipantContext(): Participant | undefined;
 // @public
 export function useMaybeRoomContext(): Room | undefined;
 
-// @public @deprecated
-export function useMaybeTrackContext(): TrackReferenceOrPlaceholder | undefined;
-
 // @public
 export function useMaybeTrackRefContext(): TrackReferenceOrPlaceholder | undefined;
 
 // @public
-export function useMediaDevices({ kind }: {
+export function useMediaDevices({ kind, onError, }: {
     kind: MediaDeviceKind;
+    onError?: (e: Error) => void;
 }): MediaDeviceInfo[];
 
 // @public
-export function useMediaDeviceSelect({ kind, room, track, requestPermissions, }: UseMediaDeviceSelectProps): {
+export function useMediaDeviceSelect({ kind, room, track, requestPermissions, onError, }: UseMediaDeviceSelectProps): {
     devices: MediaDeviceInfo[];
     className: string;
     activeDeviceId: string;
@@ -726,6 +840,7 @@ export function useMediaDeviceSelect({ kind, room, track, requestPermissions, }:
 export interface UseMediaDeviceSelectProps {
     // (undocumented)
     kind: MediaDeviceKind;
+    onError?: (e: Error) => void;
     requestPermissions?: boolean;
     // (undocumented)
     room?: Room;
@@ -733,31 +848,8 @@ export interface UseMediaDeviceSelectProps {
     track?: LocalAudioTrack | LocalVideoTrack;
 }
 
-// @public @deprecated (undocumented)
-export function useMediaTrack(source: VideoSource | AudioSource, participant?: Participant, options?: UseMediaTrackOptions): {
-    publication: TrackPublication | undefined;
-    isMuted: boolean | undefined;
-    isSubscribed: boolean | undefined;
-    track: Track | undefined;
-    elementProps: React_2.HTMLAttributes<HTMLElement>;
-};
-
-// @public @deprecated (undocumented)
-export function useMediaTrackByName(name: string, participant?: Participant, options?: UseMediaTrackOptions): {
-    publication: TrackPublication | undefined;
-    isMuted: boolean | undefined;
-    isSubscribed: boolean | undefined;
-    track: Track | undefined;
-    elementProps: HTMLAttributes<HTMLElement>;
-};
-
-// @public (undocumented)
-export interface UseMediaTrackOptions {
-    // (undocumented)
-    element?: React_2.RefObject<HTMLMediaElement>;
-    // (undocumented)
-    props?: React_2.HTMLAttributes<HTMLVideoElement | HTMLAudioElement>;
-}
+// @alpha
+export const useMultibandTrackVolume: (trackOrTrackReference?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder, options?: MultiBandTrackVolumeOptions) => number[];
 
 // @alpha
 export function usePagination(itemPerPage: number, trackReferences: TrackReferenceOrPlaceholder[]): {
@@ -806,7 +898,7 @@ export interface UseParticipantsOptions {
 }
 
 // @public
-export function useParticipantTile<T extends HTMLElement>({ trackRef, participant, source, publication, onParticipantClick, disableSpeakingIndicator, htmlProps, }: UseParticipantTileProps<T>): {
+export function useParticipantTile<T extends HTMLElement>({ trackRef, onParticipantClick, disableSpeakingIndicator, htmlProps, }: UseParticipantTileProps<T>): {
     elementProps: React_2.HTMLAttributes<T>;
 };
 
@@ -816,16 +908,15 @@ export interface UseParticipantTileProps<T extends HTMLElement> extends React_2.
     disableSpeakingIndicator?: boolean;
     // (undocumented)
     htmlProps: React_2.HTMLAttributes<T>;
+    // Warning: (ae-incompatible-release-tags) The symbol "onParticipantClick" is marked as @public, but its signature references "ParticipantClickEvent" which is marked as @internal
+    //
     // (undocumented)
     onParticipantClick?: (event: ParticipantClickEvent) => void;
-    // @deprecated (undocumented)
-    participant?: Participant;
-    // @deprecated (undocumented)
-    publication?: TrackPublication;
-    // @deprecated (undocumented)
-    source?: Track.Source;
     trackRef?: TrackReferenceOrPlaceholder;
 }
+
+// @public
+export function useParticipantTracks(sources: Track.Source[], participantIdentity?: string): TrackReference[];
 
 // @alpha
 export function usePersistentUserChoices(options?: UsePersistentUserChoicesOptions): {
@@ -855,7 +946,7 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(en
 };
 
 // @alpha (undocumented)
-export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (err: Error) => void): LocalTrack[] | undefined;
+export function usePreviewTracks(options: CreateLocalTracksOptions, onError?: (err: Error) => void): LocalTrack<Track.Kind>[] | undefined;
 
 // @public
 export function useRemoteParticipant(identity: string, options?: UseRemoteParticipantOptions): RemoteParticipant | undefined;
@@ -926,6 +1017,26 @@ export interface UseStartAudioProps {
 }
 
 // @alpha
+export function useStartVideo({ room, props }: UseStartVideoProps): {
+    mergedProps: React_2.ButtonHTMLAttributes<HTMLButtonElement> & {
+        className: string;
+        onClick: () => void;
+        style: {
+            display: string;
+        };
+    };
+    canPlayVideo: boolean;
+};
+
+// @alpha (undocumented)
+export interface UseStartVideoProps {
+    // (undocumented)
+    props: React_2.ButtonHTMLAttributes<HTMLButtonElement>;
+    // (undocumented)
+    room?: Room;
+}
+
+// @alpha
 export function useSwipe(element: React_2.RefObject<HTMLElement>, options?: UseSwipeOptions): void;
 
 // @alpha (undocumented)
@@ -944,55 +1055,24 @@ export interface UseTokenOptions {
     userInfo?: UserInfo;
 }
 
-// @public (undocumented)
-export function useTrack(trackRef: TrackIdentifier, options?: UseTrackOptions): {
-    publication: TrackPublication | undefined;
-    isMuted: boolean | undefined;
-    isSubscribed: boolean | undefined;
-    track: Track | undefined;
-    elementProps: React_2.HTMLAttributes<HTMLElement>;
-};
-
-// @public (undocumented)
-export function useTrackByName(trackRef?: TrackReferenceOrPlaceholder, options?: UseMediaTrackOptions): {
-    publication: TrackPublication | undefined;
-    isMuted: boolean | undefined;
-    isSubscribed: boolean | undefined;
-    track: Track | undefined;
-    elementProps: HTMLAttributes<HTMLElement>;
-};
-
-// @public @deprecated
-export function useTrackContext(): TrackReferenceOrPlaceholder;
+// @public
+export function useTrackByName(name: string, participant?: Participant): TrackReferenceOrPlaceholder;
 
 // Warning: (ae-forgotten-export) The symbol "TrackMutedIndicatorReturnType" needs to be exported by the entry point index.d.ts
 //
 // @public
 export function useTrackMutedIndicator(trackRef?: TrackReferenceOrPlaceholder): TrackMutedIndicatorReturnType;
 
-// @public @deprecated (undocumented)
-export function useTrackMutedIndicator(source: Track.Source, options?: UseTrackMutedIndicatorOptions): TrackMutedIndicatorReturnType;
-
-// @public (undocumented)
-export interface UseTrackMutedIndicatorOptions {
-    // @deprecated (undocumented)
-    participant?: Participant;
-}
-
-// @public (undocumented)
-export interface UseTrackOptions {
-    // (undocumented)
-    element?: React_2.RefObject<HTMLMediaElement>;
-    // (undocumented)
-    props?: React_2.HTMLAttributes<HTMLVideoElement | HTMLAudioElement>;
-}
-
 // @public
 export function useTrackRefContext(): TrackReferenceOrPlaceholder;
 
+// Warning: (ae-forgotten-export) The symbol "SourcesArray" needs to be exported by the entry point index.d.ts
+//
 // @public
 export function useTracks<T extends SourcesArray = Track.Source[]>(sources?: T, options?: UseTracksOptions): UseTracksHookReturnType<T>;
 
+// Warning: (ae-forgotten-export) The symbol "TrackSourceWithOptions" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export type UseTracksHookReturnType<T> = T extends Track.Source[] ? TrackReference[] : T extends TrackSourceWithOptions[] ? TrackReferenceOrPlaceholder[] : never;
 
@@ -1005,7 +1085,7 @@ export type UseTracksOptions = {
 
 // @public
 export function useTrackToggle<T extends ToggleSource>({ source, onChange, initialState, captureOptions, ...rest }: UseTrackToggleProps<T>): {
-    toggle: ((forceState?: boolean | undefined) => void) | ((forceState?: boolean | undefined, captureOptions?: CaptureOptionsBySource<T> | undefined) => Promise<void>);
+    toggle: (forceState?: boolean | undefined, captureOptions?: CaptureOptionsBySource<T> | undefined) => Promise<void>;
     enabled: boolean;
     pending: boolean;
     track: LocalTrackPublication | undefined;
@@ -1015,6 +1095,9 @@ export function useTrackToggle<T extends ToggleSource>({ source, onChange, initi
 // @public (undocumented)
 export interface UseTrackToggleProps<T extends ToggleSource> extends Omit<TrackToggleProps<T>, 'showIcon'> {
 }
+
+// @alpha
+export const useTrackVolume: (trackOrTrackReference?: LocalAudioTrack | RemoteAudioTrack | TrackReference, options?: AudioAnalyserOptions) => number;
 
 // @public
 export function useVisualStableUpdate(
@@ -1026,7 +1109,7 @@ export interface UseVisualStableUpdateOptions {
 }
 
 // @public
-export function VideoConference({ chatMessageFormatter, chatMessageDecoder, chatMessageEncoder, ...props }: VideoConferenceProps): React_2.JSX.Element;
+export function VideoConference({ chatMessageFormatter, chatMessageDecoder, chatMessageEncoder, SettingsComponent, ...props }: VideoConferenceProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface VideoConferenceProps extends React_2.HTMLAttributes<HTMLDivElement> {
@@ -1036,34 +1119,39 @@ export interface VideoConferenceProps extends React_2.HTMLAttributes<HTMLDivElem
     chatMessageEncoder?: MessageEncoder;
     // (undocumented)
     chatMessageFormatter?: MessageFormatter;
+    // @alpha (undocumented)
+    SettingsComponent?: React_2.ComponentType;
 }
 
 // @public
-export function VideoTrack({ onTrackClick, onClick, onSubscriptionStatusChanged, trackRef, name, publication, source, participant: p, manageSubscription, ...props }: VideoTrackProps): React_2.JSX.Element;
+export function VideoTrack({ onTrackClick, onClick, onSubscriptionStatusChanged, trackRef, manageSubscription, ...props }: VideoTrackProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export interface VideoTrackProps extends React_2.VideoHTMLAttributes<HTMLVideoElement> {
     // (undocumented)
     manageSubscription?: boolean;
-    // @deprecated (undocumented)
-    name?: string;
     // (undocumented)
     onSubscriptionStatusChanged?: (subscribed: boolean) => void;
+    // Warning: (ae-incompatible-release-tags) The symbol "onTrackClick" is marked as @public, but its signature references "ParticipantClickEvent" which is marked as @internal
+    //
     // (undocumented)
     onTrackClick?: (evt: ParticipantClickEvent) => void;
-    // @deprecated (undocumented)
-    participant?: Participant;
-    // @deprecated (undocumented)
-    publication?: TrackPublication;
-    // @deprecated (undocumented)
-    source?: Track.Source;
     trackRef?: TrackReference;
 }
+
+// @public (undocumented)
+export type WidgetState = {
+    showChat: boolean;
+    unreadMessages: number;
+    showSettings?: boolean;
+};
 
 // Warnings were encountered during analysis:
 //
 // src/context/layout-context.ts:10:3 - (ae-forgotten-export) The symbol "PinContextType" needs to be exported by the entry point index.d.ts
-// src/context/layout-context.ts:11:3 - (ae-forgotten-export) The symbol "ChatContextType" needs to be exported by the entry point index.d.ts
+// src/context/layout-context.ts:11:3 - (ae-forgotten-export) The symbol "WidgetContextType" needs to be exported by the entry point index.d.ts
+// src/hooks/useGridLayout.ts:24:6 - (ae-forgotten-export) The symbol "GridLayoutDefinition" needs to be exported by the entry point index.d.ts
+// src/hooks/useMediaDeviceSelect.ts:47:29 - (ae-forgotten-export) The symbol "SetMediaDeviceOptions" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
