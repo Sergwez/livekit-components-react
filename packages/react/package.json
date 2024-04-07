@@ -1,6 +1,6 @@
 {
   "name": "@wezer/components-react-ru",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "license": "Apache-2.0",
   "author": "wezer",
   "repository": {
@@ -8,7 +8,6 @@
     "url": "https://github.com/Sergwez/livekit-components-react.git",
     "directory": "/packages/react"
   },
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

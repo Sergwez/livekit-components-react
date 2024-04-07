@@ -5,7 +5,6 @@ import { DisconnectButton } from '../components/controls/DisconnectButton';
 import { TrackToggle } from '../components/controls/TrackToggle';
 import { ChatIcon, GearIcon, LeaveIcon } from '../assets/icons';
 import { ChatToggle } from '../components/controls/ChatToggle';
-import { BrandLogo } from '../components/brand/BrandLogo';
 import { useLocalParticipantPermissions, usePersistentUserChoices } from '../hooks';
 import { useMediaQuery } from '../hooks/internal';
 import { useMaybeLayoutContext } from '../context';
@@ -129,8 +128,7 @@ export function ControlBar({
   );
 
   return (
-    <div style={{ position: 'relative' }} {...htmlProps}>
-      <BrandLogo />
+    <div {...htmlProps}>
       {visibleControls.microphone && (
         <div className="lk-button-group">
           <TrackToggle
@@ -138,7 +136,7 @@ export function ControlBar({
             showIcon={showIcon}
             onChange={microphoneOnChange}
           >
-            {showText && 'Микрофон'}
+            {showText && 'Microphone'}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
@@ -151,7 +149,7 @@ export function ControlBar({
       {visibleControls.camera && (
         <div className="lk-button-group">
           <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}>
-            {showText && 'Камера'}
+            {showText && 'Camera'}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
@@ -168,14 +166,13 @@ export function ControlBar({
           showIcon={showIcon}
           onChange={onScreenShareChange}
         >
-          {showText &&
-            (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Демонстрация экрана')}
+          {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
         </TrackToggle>
       )}
       {visibleControls.chat && (
         <ChatToggle>
           {showIcon && <ChatIcon />}
-          {showText && 'Чат'}
+          {showText && 'Chat'}
         </ChatToggle>
       )}
       {visibleControls.settings && (
@@ -187,7 +184,7 @@ export function ControlBar({
       {visibleControls.leave && (
         <DisconnectButton>
           {showIcon && <LeaveIcon />}
-          {showText && 'Выход'}
+          {showText && 'Leave'}
         </DisconnectButton>
       )}
       <StartMediaButton />

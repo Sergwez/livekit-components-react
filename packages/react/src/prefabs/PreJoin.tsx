@@ -207,10 +207,10 @@ export function PreJoin({
   onSubmit,
   onError,
   debug,
-  joinLabel = 'Войти в комнату',
-  micLabel = 'Микрофон',
-  camLabel = 'Камера',
-  userLabel = 'Введите ваше имя',
+  joinLabel = 'Join Room',
+  micLabel = 'Microphone',
+  camLabel = 'Camera',
+  userLabel = 'Username',
   persistUserChoices = true,
   ...htmlProps
 }: PreJoinProps) {
