@@ -1,14 +1,14 @@
 {
   "private": false,
   "name": "@wezerr/components-react-ru",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "license": "Apache-2.0",
   "author": "LiveKit",
   "scripts": {
     "build": "turbo run build",
     "build:core": "turbo run build --filter=@livekit/components-core...",
     "build:next": "turbo run build --filter=@livekit/component-example-next...",
-    "build:react": "turbo run build --filter=@livekit/components-react...",
+    "build:react": "turbo run build --filter=@wezer/components-react...",
     "build:storybook": "turbo run build --filter=@livekit/component-docs-storybook...",
     "build:styles": "turbo run build --filter=@livekit/components-styles...",
     "dev:next": "turbo run dev --filter=@livekit/component-example-next...",
@@ -35,13 +35,13 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@livekit/changesets-changelog-github": "^0.0.4",
-    "@rushstack/heft": "^0.64.0",
+    "@rushstack/heft": "^0.66.0",
     "glob": "^8.1.0",
     "husky": "^8.0.3",
     "nodemon": "^3.0.3",
     "prettier": "^3.2.5",
     "turbo": "^1.12.2",
-    "typescript": "5.3.3"
+    "typescript": "5.4.3"
   },
   "engines": {
     "node": ">=18"

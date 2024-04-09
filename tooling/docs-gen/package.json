@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@livekit/components-docs-gen",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "Generate component docs.",
   "license": "Apache 2.0",
   "author": "LiveKit",
@@ -21,7 +21,7 @@
   "sideEffects": false,
   "dependencies": {
     "@livekit/api-documenter": "workspace:*",
-    "@livekit/components-react": "workspace:*",
+    "@wezer/components-react-ru": "workspace:*",
     "eslint-config-lk-custom": "workspace:*"
   },
   "devDependencies": {

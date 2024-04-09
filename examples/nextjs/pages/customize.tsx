@@ -11,7 +11,7 @@ import {
   GridLayout,
   useTracks,
   TrackRefContext,
-} from '@livekit/components-react';
+} from '@wezer/components-react-ru';
 import { ConnectionQuality, Room, Track } from 'livekit-client';
 import styles from '../styles/Simple.module.css';
 import myStyles from '../styles/Customize.module.css';

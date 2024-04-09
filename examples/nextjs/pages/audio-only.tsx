@@ -1,4 +1,4 @@
-import { AudioConference, LiveKitRoom, useToken } from '@livekit/components-react';
+import { AudioConference, LiveKitRoom, useToken } from '@wezer/components-react-ru';
 import type { NextPage } from 'next';
 import { generateRandomUserId } from '../lib/helper';
 import { useState } from 'react';

@@ -1,9 +1,16 @@
-import { Track } from 'livekit-client';
+import { Track, RoomEvent } from 'livekit-client';
 import * as React from 'react';
 import { MediaDeviceMenu } from './MediaDeviceMenu';
 import { DisconnectButton } from '../components/controls/DisconnectButton';
+import { RecordButton } from '../components/controls/RecordButton';
 import { TrackToggle } from '../components/controls/TrackToggle';
-import { ChatIcon, GearIcon, LeaveIcon } from '../assets/icons';
+import {
+  ChatIcon,
+  GearIcon,
+  LeaveIcon,
+  RecordCircleIcon,
+  RecordCircleDisabledIcon,
+} from '../assets/icons';
 import { ChatToggle } from '../components/controls/ChatToggle';
 import { useLocalParticipantPermissions, usePersistentUserChoices } from '../hooks';
 import { useMediaQuery } from '../hooks/internal';
@@ -12,6 +19,7 @@ import { supportsScreenSharing } from '@livekit/components-core';
 import { mergeProps } from '../utils';
 import { StartMediaButton } from '../components/controls/StartMediaButton';
 import { SettingsMenuToggle } from '../components/controls/SettingsMenuToggle';
+import { useRoomContext } from '../context';
 
 /** @public */
 export type ControlBarControls = {
@@ -21,6 +29,7 @@ export type ControlBarControls = {
   screenShare?: boolean;
   leave?: boolean;
   settings?: boolean;
+  record?: boolean;
 };
 
 /** @public */
@@ -65,12 +74,15 @@ export function ControlBar({
       setIsChatOpen(layoutContext?.widget.state?.showChat);
     }
   }, [layoutContext?.widget.state?.showChat]);
-  const isTooLittleSpace = useMediaQuery(`(max-width: ${isChatOpen ? 1000 : 760}px)`);
+  const isTooLittleSpace = useMediaQuery(`(max-width: ${isChatOpen ? 1000 : 890}px)`);
 
   const defaultVariation = isTooLittleSpace ? 'minimal' : 'verbose';
   variation ??= defaultVariation;
 
   const visibleControls = { leave: true, ...controls };
+
+  const room = useRoomContext();
+  const metadata = JSON.parse(room.metadata || '{}');
 
   const localPermissions = useLocalParticipantPermissions();
 
@@ -79,11 +91,13 @@ export function ControlBar({
     visibleControls.chat = false;
     visibleControls.microphone = false;
     visibleControls.screenShare = false;
+    visibleControls.record = true;
   } else {
     visibleControls.camera ??= localPermissions.canPublish;
     visibleControls.microphone ??= localPermissions.canPublish;
     visibleControls.screenShare ??= localPermissions.canPublish;
     visibleControls.chat ??= localPermissions.canPublishData && controls?.chat;
+    visibleControls.record = true;
   }
 
   const showIcon = React.useMemo(
@@ -127,6 +141,25 @@ export function ControlBar({
     [saveVideoInputEnabled],
   );
 
+  const [isRecording, setRecording] = React.useState(metadata?.isRecordCompositeEgress);
+  React.useEffect(() => {
+    setRecord(metadata?.isRecordCompositeEgress);
+  }, [metadata?.isRecordCompositeEgress]);
+  room.on(RoomEvent.RoomMetadataChanged, () => {
+    const metadata = JSON.parse(room.metadata || '{}');
+    if (
+      (metadata.isRecordCompositeEgress === null ||
+        typeof metadata.isRecordCompositeEgress === 'string') &&
+      metadata.isRecordCompositeEgress !== isRecording
+    ) {
+      setRecording(metadata.isRecordCompositeEgress);
+    }
+  });
+  const [record, setRecord] = React.useState(isRecording);
+  React.useEffect(() => {
+    setRecord(isRecording);
+  }, [isRecording]);
+
   return (
     <div {...htmlProps}>
       {visibleControls.microphone && (
@@ -136,7 +169,7 @@ export function ControlBar({
             showIcon={showIcon}
             onChange={microphoneOnChange}
           >
-            {showText && 'Microphone'}
+            {showText && 'Микрофон'}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
@@ -149,7 +182,7 @@ export function ControlBar({
       {visibleControls.camera && (
         <div className="lk-button-group">
           <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}>
-            {showText && 'Camera'}
+            {showText && 'Камера'}
           </TrackToggle>
           <div className="lk-button-group-menu">
             <MediaDeviceMenu
@@ -166,25 +199,32 @@ export function ControlBar({
           showIcon={showIcon}
           onChange={onScreenShareChange}
         >
-          {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
+          {showText &&
+            (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Демонстарция экрана')}
         </TrackToggle>
+      )}
+      {visibleControls.record && (
+        <RecordButton>
+          {showIcon && record ? <RecordCircleIcon fill={'red'} /> : <RecordCircleDisabledIcon />}
+          {showText && 'Запись'}
+        </RecordButton>
       )}
       {visibleControls.chat && (
         <ChatToggle>
           {showIcon && <ChatIcon />}
-          {showText && 'Chat'}
+          {showText && 'Чат'}
         </ChatToggle>
       )}
       {visibleControls.settings && (
         <SettingsMenuToggle>
           {showIcon && <GearIcon />}
-          {showText && 'Settings'}
+          {showText && 'Настройки'}
         </SettingsMenuToggle>
       )}
       {visibleControls.leave && (
         <DisconnectButton>
           {showIcon && <LeaveIcon />}
-          {showText && 'Leave'}
+          {showText && 'Выход'}
         </DisconnectButton>
       )}
       <StartMediaButton />

@@ -22,7 +22,7 @@
     "@microsoft/api-extractor-model": "^7.27.2",
     "@microsoft/tsdoc": "0.14.2",
     "@rushstack/heft-node-rig": "^2.2.6",
-    "@rushstack/node-core-library": "^3.59.3",
+    "@rushstack/node-core-library": "^4.0.0",
     "@rushstack/ts-command-line": "^4.15.0",
     "colors": "~1.4.0",
     "eslint-config-lk-custom": "*",
@@ -33,12 +33,12 @@
     "@rushstack/eslint-config": "^3.3.1",
     "@types/heft-jest": "^1.0.6",
     "@types/js-yaml": "3.12.10",
-    "@types/node": "20.11.16",
+    "@types/node": "20.12.4",
     "@types/resolve": "1.20.6",
     "fast-glob": "^3.3.1",
     "nodemon": "^3.0.0"
   },
   "peerDependencies": {
-    "@rushstack/heft": "^0.58.2 || ^0.62.0 || ^0.63.0"
+    "@rushstack/heft": "^0.58.2 || ^0.62.0 || ^0.63.0 || ^0.66.0"
   }
 }

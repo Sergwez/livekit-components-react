@@ -41,6 +41,7 @@ export { UseTrackToggleProps, useTrackToggle } from './useTrackToggle';
 export { UseTracksHookReturnType, UseTracksOptions, useTracks } from './useTracks';
 export { UseVisualStableUpdateOptions, useVisualStableUpdate } from './useVisualStableUpdate';
 // export { UseTrackOptions, useTrack } from './useTrack';
+export { useRecordButton } from './useRecordButton';
 export { useTrackByName } from './useTrackByName';
 export { useChat } from './useChat';
 export {

@@ -17,3 +17,5 @@ export { default as ScreenShareIcon } from './ScreenShareIcon';
 export { default as ScreenShareStopIcon } from './ScreenShareStopIcon';
 export { default as SpinnerIcon } from './SpinnerIcon';
 export { default as UnfocusToggleIcon } from './UnfocusToggleIcon';
+export { default as RecordCircleIcon } from './RecordCircleIcon';
+export { default as RecordCircleDisabledIcon } from './RecordCircleDisabledIcon';

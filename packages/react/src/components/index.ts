@@ -29,3 +29,4 @@ export {
   ChatEntry,
   formatChatMessageLinks,
 } from '../components/ChatEntry';
+export * from './controls/RecordButton';

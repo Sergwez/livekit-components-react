@@ -10,7 +10,7 @@ import {
   useToken,
   useTrackRefContext,
   useTracks,
-} from '@livekit/components-react';
+} from '@wezer/components-react-ru';
 import styles from '../styles/Clubhouse.module.scss';
 import { Track } from 'livekit-client';
 import { useMemo, useState } from 'react';
