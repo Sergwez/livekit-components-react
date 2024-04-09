@@ -58,9 +58,10 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
     const inputElement: any = document.querySelector('.lk-chat-form-input');
 
     const parsBrandingData: any = localStorage.getItem('brandingData');
-    const primaryColor = JSON.parse(parsBrandingData.primary_color);
-    const textPrimaryColor = JSON.parse(parsBrandingData.text_primary_color);
-    const borderRadius = JSON.parse(parsBrandingData.border_radius);
+    const pars = JSON.parse(parsBrandingData);
+    const primaryColor = pars.primary_color;
+    const textPrimaryColor = pars.text_primary_color;
+    const borderRadius = pars.border_radius;
 
     selectedItems.forEach((item) => {
       const ariaSelected: any = item.getAttribute('aria-selected');
