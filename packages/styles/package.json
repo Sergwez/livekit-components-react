@@ -1,11 +1,11 @@
 {
-  "name": "@livekit/components-styles",
+  "name": "@wezer/components-styles-ru",
   "version": "1.0.11",
   "license": "Apache-2.0",
-  "author": "LiveKit",
+  "author": "wezer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/livekit/components-js.git",
+    "url": "https://github.com/Sergwez/livekit-components-react.git",
     "directory": "/packages/styles"
   },
   "exports": {
