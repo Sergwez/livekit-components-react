@@ -8,8 +8,8 @@ import {
   ChatIcon,
   GearIcon,
   LeaveIcon,
-  RecordCircleIcon,
-  RecordCircleDisabledIcon,
+  // RecordCircleIcon,
+  // RecordCircleDisabledIcon,
 } from '../assets/icons';
 import { ChatToggle } from '../components/controls/ChatToggle';
 import { useLocalParticipantPermissions, usePersistentUserChoices } from '../hooks';
@@ -205,7 +205,8 @@ export function ControlBar({
       )}
       {visibleControls.record && (
         <RecordButton>
-          {showIcon && record ? <RecordCircleIcon fill={'red'} /> : <RecordCircleDisabledIcon />}
+          {/*? <RecordCircleIcon fill={'red'} /> : <RecordCircleDisabledIcon />*/}
+          {showIcon && record}
           {showText && 'Запись'}
         </RecordButton>
       )}
