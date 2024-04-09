@@ -21,6 +21,7 @@ import { ParticipantPlaceholder } from '../assets/images';
 import { useMediaDevices, usePersistentUserChoices } from '../hooks';
 import { useWarnAboutMissingStyles } from '../hooks/useWarnAboutMissingStyles';
 import { defaultUserChoices } from '@livekit/components-core';
+import { useEffect } from 'react';
 
 /**
  * Props for the PreJoin component.
@@ -341,6 +342,22 @@ export function PreJoin({
       log.warn('Validation failed with: ', userChoices);
     }
   }
+  useEffect(() => {
+    const joinRoom = document.querySelector('.lk-join-button')
+
+    const parsBrandingData: any = localStorage.getItem('brandingData');
+    const pars = JSON.parse(parsBrandingData);
+    const primaryColor = pars.primary_color;
+    const textPrimaryColor = pars.text_primary_color;
+    const borderRadius = pars.border_radius;
+
+    // @ts-ignore
+    joinRoom.style.background = primaryColor;
+    // @ts-ignore
+    joinRoom.style.color = textPrimaryColor;
+    // @ts-ignore
+    joinRoom.style.borderRadius = borderRadius;
+  })
 
   useWarnAboutMissingStyles();
 
