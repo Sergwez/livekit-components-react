@@ -3,23 +3,19 @@
  */
 import * as React from 'react';
 import type { SVGProps } from 'react';
+/**
+ * @internal
+ */
 const SvgRecordCircleIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    fill="currentcolor"
-    width={16}
-    height={16}
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    strokeWidth="1"
-  >
-    <circle cx="8" cy="8" r="8">
+  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentcolor" {...props}>
+    <circle cx={8} cy={8} r={8}>
       <animate
-        attributeType="XML"
         attributeName="r"
-        values="8;6;8"
-        dur="2s"
+        attributeType="XML"
         begin="0.7s"
+        dur="2s"
         repeatCount="indefinite"
+        values="8;6;8"
       />
     </circle>
   </svg>
