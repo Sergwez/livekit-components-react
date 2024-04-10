@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@wezerr/components-react-ru",
-  "version": "2.0.9",
+  "version": "2.0.11",
   "license": "Apache-2.0",
   "author": "LiveKit",
   "scripts": {
