@@ -33,92 +33,80 @@ export interface TrackToggleProps<T extends ToggleSource>
  */
 
 export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: TrackToggleProps<T>) {
-  // const [primaryColor, setPrimaryColor] = useState('');
-  // const [textPrimaryColor, setTextPrimaryColor] = useState('');
-  // const [borderRadius, setBorderRadius] = useState('');
-  // useEffect(() => {
-  //   const endpoint = 'https://api.dev.proofix.ru/api/branding_meets';
-  //   fetch(endpoint)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setPrimaryColor(data.data.list[1].primary_color);
-  //       setTextPrimaryColor(data.data.list[1].text_primary_color);
-  //       setBorderRadius(data.data.list[1].border_radius);
-  //     })
-  //     .catch((error) => console.error('Error:', error));
-  // }, []);
   useEffect(() => {
-    const lkButton = document.querySelectorAll('.lk-button');
-    const lkParticipantName = document.querySelectorAll('.lk-participant-name');
-    const lkConnectionQuality = document.querySelectorAll('.lk-connection-quality');
-    const lkParticipantTile = document.querySelectorAll('.lk-participant-tile');
-    const lkGridLayout = document.querySelectorAll('.lk-grid-layout');
-    const lkChat = document.querySelector('.lk-chat');
-    const selectedItems = document.querySelectorAll('.lk-media-device-select li[aria-selected]');
-    const inputElement: any = document.querySelector('.lk-chat-form-input');
-
-    const parsBrandingData: any = localStorage.getItem('brandingData');
-    let pars: any;
-    let primaryColor: any;
-    let textPrimaryColor: any;
-    let borderRadius: any;
-    if (parsBrandingData) {
-      pars = JSON.parse(parsBrandingData);
-      primaryColor = pars.primary_color;
-      textPrimaryColor = pars.text_primary_color;
-      borderRadius = pars.border_radius;
-    }
-
-    selectedItems.forEach((item) => {
-      const ariaSelected: any = item.getAttribute('aria-selected');
-      const dataLkActive: any = item.getAttribute('data-lk-active');
-      if (ariaSelected && dataLkActive) {
-        console.log(ariaSelected);
-        // @ts-ignore
-        item.style.background = textPrimaryColor;
+    const observer = new MutationObserver(() => {
+      const lkButton: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-button');
+      const lkParticipantName: NodeListOf<HTMLElement> =
+        document.querySelectorAll('.lk-participant-name');
+      const lkConnectionQuality: NodeListOf<HTMLElement> =
+        document.querySelectorAll('.lk-connection-quality');
+      const lkParticipantTile: NodeListOf<HTMLElement> =
+        document.querySelectorAll('.lk-participant-tile');
+      const lkGridLayout: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-grid-layout');
+      const lkChat: HTMLElement | null = document.querySelector('.lk-chat');
+      const selectedItems: NodeListOf<HTMLElement> = document.querySelectorAll(
+        '.lk-media-device-select li[aria-selected]',
+      );
+      const inputElement: HTMLElement | null = document.querySelector('.lk-chat-form-input');
+      const parsBrandingData: string | null = localStorage.getItem('brandingData');
+      let pars: {
+        primary_color: string | null;
+        text_primary_color: string | null;
+        border_radius: string | null;
+      } = {
+        primary_color: null,
+        text_primary_color: null,
+        border_radius: null,
+      };
+      let primaryColor: string | null;
+      let textPrimaryColor: string | null = null;
+      let borderRadius: string | null;
+      if (parsBrandingData) {
+        pars = JSON.parse(parsBrandingData);
+        primaryColor = pars.primary_color;
+        textPrimaryColor = pars.text_primary_color;
+        borderRadius = pars.border_radius;
       }
+
+      selectedItems.forEach((item: any) => {
+        const ariaSelected: string | null = item.getAttribute('aria-selected');
+        const dataLkActive: string | null = item.getAttribute('data-lk-active');
+        if (ariaSelected && dataLkActive) {
+          item.style.background = textPrimaryColor;
+        }
+      });
+
+      if (inputElement) {
+        inputElement.addEventListener('focus', function (e: FocusEvent) {
+          console.log(typeof e);
+          (e.target as HTMLElement).style.outline = `2px solid ${textPrimaryColor ?? ''}`;
+        });
+      }
+      if (lkChat) {
+        lkChat.style.color = textPrimaryColor ?? '';
+      }
+
+      lkButton.forEach((key) => {
+        key.style.color = textPrimaryColor ?? '';
+        key.style.borderRadius = `${borderRadius}px`;
+      });
+      lkParticipantTile.forEach((key) => {
+        key.style.color = primaryColor ?? '';
+      });
+      lkGridLayout.forEach((key) => {
+        key.style.color = primaryColor ?? '';
+      });
+      lkParticipantName.forEach((key) => {
+        key.style.color = textPrimaryColor ?? '';
+      });
+      lkConnectionQuality.forEach((key) => {
+        key.style.color = textPrimaryColor ?? '';
+      });
     });
 
-    inputElement.addEventListener('focus', function (e: any) {
-      e.target.style.outline = `2px solid ${textPrimaryColor}`;
-    });
-
-    // @ts-ignore
-    lkChat.style.color = textPrimaryColor;
-    lkButton.forEach((key) => {
-      // @ts-ignore
-      key.style.color = textPrimaryColor;
-      // @ts-ignore
-      key.style.borderRadius = `${borderRadius}px`;
-      // key.addEventListener('mouseover', function () {
-      //   // @ts-ignore
-      //   key.style.background = primaryColor;
-      // });
-      //
-      // key.addEventListener('mouseout', function () {
-      //   // @ts-ignore
-      //   key.style.background = '#1e1e1e';
-      // });
-    });
-    lkParticipantTile.forEach((key) => {
-      // @ts-ignore
-      key.style.color = primaryColor;
-    });
-    lkGridLayout.forEach((key) => {
-      // @ts-ignore
-      key.style.color = primaryColor;
-    });
-
-    lkParticipantName.forEach((key) => {
-      // @ts-ignore
-      key.style.color = textPrimaryColor;
-    });
-
-    lkConnectionQuality.forEach((key) => {
-      // @ts-ignore
-      key.style.color = textPrimaryColor;
-    });
-  });
+    observer.observe(document, { attributes: true, childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
   const { buttonProps, enabled } = useTrackToggle(props);
   return (
     <button {...buttonProps}>
