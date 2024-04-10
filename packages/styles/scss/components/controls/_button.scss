@@ -28,6 +28,7 @@
   /* apply accent color (blue) to screen share button, when screen sharing is active */
   &[data-source='screen_share'][data-enabled='true'] {
     background-color: var(--accent-bg);
+
     &:hover {
       background-color: var(--accent2);
     }
@@ -76,5 +77,19 @@
     border-bottom: 0.125em solid;
     transform: rotate(-45deg);
     transform-origin: center center;
+  }
+}
+
+.branding_style {
+  width: 150px;
+  position: absolute;
+  left: 10px;
+  @media (max-width: 1100px) {
+    min-width: 50px;
+    position: relative;
+    left: 0;
+  }
+  @media (max-width: 516px) {
+    //display: none;
   }
 }
