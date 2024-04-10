@@ -68,11 +68,11 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
         borderRadius = pars.border_radius;
       }
 
-      selectedItems.forEach((item: any) => {
+      selectedItems.forEach((item) => {
         const ariaSelected: string | null = item.getAttribute('aria-selected');
         const dataLkActive: string | null = item.getAttribute('data-lk-active');
         if (ariaSelected && dataLkActive) {
-          item.style.background = textPrimaryColor;
+          item.style.background = textPrimaryColor ?? '';
         }
       });
 
