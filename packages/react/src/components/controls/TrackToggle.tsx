@@ -34,11 +34,13 @@ export interface TrackToggleProps<T extends ToggleSource>
 
 export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: TrackToggleProps<T>) {
   const [count, setCount] = useState(0);
+  console.log('setInterval');
   setInterval(() => {
     setCount(count + 1);
   }, 5000);
 
   useEffect(() => {
+    console.log('useEffect')
     const observer = new MutationObserver(() => {
       const lkButton: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-button');
       const lkParticipantName: NodeListOf<HTMLElement> =
@@ -58,6 +60,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
       );
       const inputVoice: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-grid-layout div');
       const parsBrandingData: string | null = localStorage.getItem('brandingData');
+      console.log(parsBrandingData, 'parsBrandingData');
       // const activeButtons: NodeListOf<HTMLElement> = document.querySelectorAll(
       //   '.lk-media-device-select [data-lk-active=true] > .lk-button',
       // );
