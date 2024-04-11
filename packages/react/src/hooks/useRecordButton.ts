@@ -27,7 +27,7 @@ function setupRecordButton() {
       );
     });
 
-    if (currentEgress[0]?.egressId) {
+    if (currentEgress[0]?.egressId || currentEgress[0]?.egressId === "null") {
       const params = new URLSearchParams({ egressId: metaData.isRecordCompositeEgress });
       const stopEndpoint = `${apiEndpoint}stop_record`;
       const res = await fetch(`${stopEndpoint}?${params.toString()}`);
@@ -37,7 +37,7 @@ function setupRecordButton() {
       }
     }
 
-    if (!currentEgress[0]?.egressId) {
+    if (!currentEgress[0]?.egressId || currentEgress[0]?.egressId !== "null") {
       const meetСode = sessionStorage.getItem('meetСode') as string;
       const companyСode = sessionStorage.getItem('companyСode') as string;
       const params = new URLSearchParams({ roomName: room.name, meetСode, companyСode });
