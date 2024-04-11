@@ -2,7 +2,7 @@ import type { CaptureOptionsBySource, ToggleSource } from '@livekit/components-c
 import * as React from 'react';
 import { getSourceIcon } from '../../assets/icons/util';
 import { useTrackToggle } from '../../hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /** @public */
 export interface TrackToggleProps<T extends ToggleSource>
@@ -33,6 +33,11 @@ export interface TrackToggleProps<T extends ToggleSource>
  */
 
 export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: TrackToggleProps<T>) {
+  const [count, setCount] = useState(0);
+  setInterval(() => {
+    setCount(count + 1);
+  }, 5000);
+
   useEffect(() => {
     const observer = new MutationObserver(() => {
       const lkButton: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-button');
@@ -141,7 +146,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
 
     observer.observe(document, { attributes: true, childList: true, subtree: true });
     // return () => observer.disconnect();
-  }, []);
+  }, [count]);
   const { buttonProps, enabled } = useTrackToggle(props);
   return (
     <button {...buttonProps}>
