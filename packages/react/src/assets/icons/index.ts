@@ -13,6 +13,8 @@ export { default as QualityExcellentIcon } from './QualityExcellentIcon';
 export { default as QualityGoodIcon } from './QualityGoodIcon';
 export { default as QualityPoorIcon } from './QualityPoorIcon';
 export { default as QualityUnknownIcon } from './QualityUnknownIcon';
+export { default as RecordCircleDisabledIcon } from './RecordCircleDisabledIcon';
+export { default as RecordCircleIcon } from './RecordCircleIcon';
 export { default as ScreenShareIcon } from './ScreenShareIcon';
 export { default as ScreenShareStopIcon } from './ScreenShareStopIcon';
 export { default as SpinnerIcon } from './SpinnerIcon';
