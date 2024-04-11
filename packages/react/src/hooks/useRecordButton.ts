@@ -38,7 +38,9 @@ function setupRecordButton() {
     }
 
     if (!currentEgress[0]?.egressId) {
-      const params = new URLSearchParams({ roomName: room.name });
+      const meetСode = sessionStorage.getItem('meetСode') as string;
+      const companyСode = sessionStorage.getItem('companyСode') as string;
+      const params = new URLSearchParams({ roomName: room.name, meetСode, companyСode });
       const startEndpoint = `${apiEndpoint}start_record`;
       const res = await fetch(`${startEndpoint}?${params.toString()}`);
       const { response } = await res.json();
