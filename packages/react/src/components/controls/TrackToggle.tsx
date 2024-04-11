@@ -44,11 +44,18 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
         document.querySelectorAll('.lk-participant-tile');
       const lkGridLayout: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-grid-layout');
       const lkChat: HTMLElement | null = document.querySelector('.lk-chat');
-      const selectedItems: NodeListOf<HTMLElement> = document.querySelectorAll(
-        '.lk-media-device-select li[aria-selected]',
-      );
+      // const selectedItems: NodeListOf<HTMLElement> = document.querySelectorAll(
+      //   '.lk-media-device-select [data-lk-active=true]>.lk-button',
+      // );
       const inputElement: HTMLElement | null = document.querySelector('.lk-chat-form-input');
+      const selectedItems: NodeListOf<HTMLElement> = document.querySelectorAll(
+        '.lk-media-device-select li',
+      );
+      const inputVoice: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-grid-layout div');
       const parsBrandingData: string | null = localStorage.getItem('brandingData');
+      // const activeButtons: NodeListOf<HTMLElement> = document.querySelectorAll(
+      //   '.lk-media-device-select [data-lk-active=true] > .lk-button',
+      // );
       let pars: {
         primary_color: string | null;
         text_primary_color: string | null;
@@ -61,24 +68,44 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
       let primaryColor: string | null;
       let textPrimaryColor: string | null = null;
       let borderRadius: string | null;
+
       if (parsBrandingData) {
         pars = JSON.parse(parsBrandingData);
         primaryColor = pars.primary_color;
         textPrimaryColor = pars.text_primary_color;
         borderRadius = pars.border_radius;
       }
+      // selectedItems.forEach((item) => {
+      //   const ariaSelected: string | null = item.getAttribute('aria-selected');
+      //   const dataLkActive: string | null = item.getAttribute('data-lk-active');
+      //   if (ariaSelected && dataLkActive) {
+      //     item.style.backgroundColor = textPrimaryColor ?? '';
+      //   }
+      // });
+      inputVoice.forEach((key) => {
+        const dataLkActive: string | null = key.getAttribute('data-lk-speaking');
+        if (dataLkActive === 'true') {
+          //   asdas
+        }
+      });
+      selectedItems.forEach((key) => {
+        const dataLkActive: string | null = key.getAttribute('data-lk-active');
 
-      selectedItems.forEach((item) => {
-        const ariaSelected: string | null = item.getAttribute('aria-selected');
-        const dataLkActive: string | null = item.getAttribute('data-lk-active');
-        if (ariaSelected && dataLkActive) {
-          item.style.background = textPrimaryColor ?? '';
+        if (dataLkActive === 'true') {
+          const childElement: HTMLElement | null = key.querySelector('button');
+          if (childElement) {
+            childElement.style.backgroundColor = primaryColor ?? '';
+          }
+        } else {
+          const childElement: HTMLElement | null = key.querySelector('button');
+          if (childElement) {
+            childElement.style.backgroundColor = '' ?? '';
+          }
         }
       });
 
       if (inputElement) {
         inputElement.addEventListener('focus', function (e: FocusEvent) {
-          console.log(typeof e);
           (e.target as HTMLElement).style.outline = `2px solid ${textPrimaryColor ?? ''}`;
         });
       }
@@ -90,8 +117,16 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
         key.style.color = textPrimaryColor ?? '';
         key.style.borderRadius = `${borderRadius}px`;
       });
+
       lkParticipantTile.forEach((key) => {
-        key.style.color = primaryColor ?? '';
+        const dataSpeaking: string | null = key.getAttribute('data-lk-speaking');
+        if (dataSpeaking === 'true') {
+          key.style.border = `1px solid ${textPrimaryColor}`;
+        } else {
+          key.style.border = '0px solid #f91f31';
+        }
+        // key.style.border = '1px solid #f91f31';
+        // key.style.color = primaryColor ?? '';
       });
       lkGridLayout.forEach((key) => {
         key.style.color = primaryColor ?? '';
@@ -105,7 +140,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
     });
 
     observer.observe(document, { attributes: true, childList: true, subtree: true });
-    return () => observer.disconnect();
+    // return () => observer.disconnect();
   }, []);
   const { buttonProps, enabled } = useTrackToggle(props);
   return (

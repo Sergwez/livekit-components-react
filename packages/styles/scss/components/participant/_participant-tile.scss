@@ -14,7 +14,7 @@
     left: 0;
     right: 0;
     border-radius: var(--border-radius);
-    border: 0px solid var(--accent-bg);
+    //border: 0px solid var(--accent-bg);
     // When the participant stops speaking, the fade away transition is longer and starts with a delay.
     transition-property: border opacity;
     transition-delay: 0.5s;

@@ -20,6 +20,7 @@ import { mergeProps } from '../utils';
 import { StartMediaButton } from '../components/controls/StartMediaButton';
 import { SettingsMenuToggle } from '../components/controls/SettingsMenuToggle';
 import { useRoomContext } from '../context';
+import { BrandLogo } from '../components/brand/BrandLogo';
 
 /** @public */
 export type ControlBarControls = {
@@ -162,6 +163,7 @@ export function ControlBar({
 
   return (
     <div {...htmlProps}>
+      <BrandLogo></BrandLogo>
       {visibleControls.microphone && (
         <div className="lk-button-group">
           <TrackToggle
@@ -194,6 +196,7 @@ export function ControlBar({
       )}
       {visibleControls.screenShare && browserSupportsScreenSharing && (
         <TrackToggle
+          className="lk-hidden-mobile"
           source={Track.Source.ScreenShare}
           captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
           showIcon={showIcon}
