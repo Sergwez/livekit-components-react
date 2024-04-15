@@ -12,7 +12,7 @@ interface EEgress {
 function setupRecordButton() {
   const toggleRecord = async (room: Room) => {
     // const apiEndpoint = sessionStorage.getItem('apiEndpoint');
-    const apiEndpoint = `${window.origin}/`
+    const apiEndpoint = `${window.origin}/api/`
     // const apiEndpoint = 'http://localhost:3000/api/';
     const metaData = JSON.parse(room.metadata || '{}');
     let isRecord = null;
