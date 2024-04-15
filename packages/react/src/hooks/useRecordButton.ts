@@ -11,8 +11,8 @@ interface EEgress {
 
 function setupRecordButton() {
   const toggleRecord = async (room: Room) => {
-    // sessionStorage.setItem('apiEndpoint', 'http://localhost:3001/api/');
-    const apiEndpoint = sessionStorage.getItem('apiEndpoint');
+    // const apiEndpoint = sessionStorage.getItem('apiEndpoint');
+    const apiEndpoint = window.origin
     // const apiEndpoint = 'http://localhost:3000/api/';
     const metaData = JSON.parse(room.metadata || '{}');
     let isRecord = null;
@@ -21,14 +21,14 @@ function setupRecordButton() {
     const res = await fetch(`${listEndpoint}`);
     const { response } = await res.json();
 
-    const currentEgress = response.filter((elem: EEgress) => {
+    const currentActiveEgress = response.filter((elem: EEgress) => {
       return (
         elem.roomName === room.name &&
         (elem.status === 'EGRESS_STARTING' || elem.status === 'EGRESS_ACTIVE' || elem.status === 0 || elem.status === 1  )
       );
     });
 
-    if (currentEgress[0]?.egressId || currentEgress[0]?.egressId === "null") {
+    if (currentActiveEgress[0]?.egressId) {
       const params = new URLSearchParams({ egressId: metaData.isRecordCompositeEgress });
       const stopEndpoint = `${apiEndpoint}stop_record`;
       const res = await fetch(`${stopEndpoint}?${params.toString()}`);
@@ -38,7 +38,7 @@ function setupRecordButton() {
       }
     }
 
-    if (!currentEgress[0]?.egressId || currentEgress[0]?.egressId !== "null") {
+    if (!currentActiveEgress[0]?.egressId) {
       const [companyСode, meetСode] = room.name.split('-')
       const params = new URLSearchParams({ roomName: room.name, meetСode, companyСode });
       const startEndpoint = `${apiEndpoint}start_record`;
