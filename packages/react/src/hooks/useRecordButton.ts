@@ -13,6 +13,7 @@ function setupRecordButton() {
   const toggleRecord = async (room: Room) => {
     // sessionStorage.setItem('apiEndpoint', 'http://localhost:3001/api/');
     const apiEndpoint = sessionStorage.getItem('apiEndpoint');
+    // const apiEndpoint = 'http://localhost:3000/api/';
     const metaData = JSON.parse(room.metadata || '{}');
     let isRecord = null;
 
@@ -38,8 +39,7 @@ function setupRecordButton() {
     }
 
     if (!currentEgress[0]?.egressId || currentEgress[0]?.egressId !== "null") {
-      const meetСode = sessionStorage.getItem('meetСode') as string;
-      const companyСode = sessionStorage.getItem('companyСode') as string;
+      const [companyСode, meetСode] = room.name.split('-')
       const params = new URLSearchParams({ roomName: room.name, meetСode, companyСode });
       const startEndpoint = `${apiEndpoint}start_record`;
       const res = await fetch(`${startEndpoint}?${params.toString()}`);
