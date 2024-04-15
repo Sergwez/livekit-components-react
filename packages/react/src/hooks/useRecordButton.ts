@@ -6,7 +6,7 @@ import { mergeProps } from '../mergeProps';
 
 interface EEgress {
   roomName: string;
-  status: string;
+  status: string | number;
 }
 
 function setupRecordButton() {
@@ -23,7 +23,7 @@ function setupRecordButton() {
     const currentEgress = response.filter((elem: EEgress) => {
       return (
         elem.roomName === room.name &&
-        (elem.status === 'EGRESS_STARTING' || elem.status === 'EGRESS_ACTIVE')
+        (elem.status === 'EGRESS_STARTING' || elem.status === 'EGRESS_ACTIVE' || elem.status === 0 || elem.status === 1  )
       );
     });
 
