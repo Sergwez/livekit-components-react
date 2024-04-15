@@ -343,35 +343,41 @@ export function PreJoin({
     }
   }
   useEffect(() => {
-    const joinRoom: HTMLElement | null = document.querySelector('.lk-join-button');
-    const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
+    function setBranding() {
+      const joinRoom: HTMLElement | null = document.querySelector('.lk-join-button');
+      const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
 
-    let pars: {
-      primary_color: string;
-      text_primary_color: string;
-      border_radius: string;
-    } = {
-      primary_color: '',
-      text_primary_color: '',
-      border_radius: '',
-    };
-    let primaryColor = '';
-    let textPrimaryColor = '';
-    let borderRadius = '';
+      let pars: {
+        primary_color: string;
+        text_primary_color: string;
+        border_radius: string;
+      } = {
+        primary_color: '',
+        text_primary_color: '',
+        border_radius: '',
+      };
+      let primaryColor = '';
+      let textPrimaryColor = '';
+      let borderRadius = '';
 
-    if (parsBrandingData) {
-      pars = JSON.parse(parsBrandingData);
-      primaryColor = pars.primary_color;
-      textPrimaryColor = pars.text_primary_color;
-      borderRadius = pars.border_radius;
+      if (parsBrandingData) {
+        pars = JSON.parse(parsBrandingData);
+        primaryColor = pars.primary_color;
+        textPrimaryColor = pars.text_primary_color;
+        borderRadius = pars.border_radius;
+      }
+
+      if (joinRoom) {
+        joinRoom.style.background = primaryColor ?? '';
+        joinRoom.style.color = textPrimaryColor ?? '';
+        joinRoom.style.borderRadius = borderRadius ?? '';
+      }
     }
-
-    if (joinRoom) {
-      joinRoom.style.background = primaryColor ?? '';
-      joinRoom.style.color = textPrimaryColor ?? '';
-      joinRoom.style.borderRadius = borderRadius ?? '';
-    }
-  });
+    setBranding()
+    window.addEventListener('storage', () => {
+      setBranding()
+    })
+  }, []);
 
   useWarnAboutMissingStyles();
 
