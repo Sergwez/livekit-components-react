@@ -52,7 +52,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
         '.lk-media-device-select li',
       );
       const inputVoice: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-grid-layout div');
-      const parsBrandingData: string | null = localStorage.getItem('brandingData');
+      const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
       // const activeButtons: NodeListOf<HTMLElement> = document.querySelectorAll(
       //   '.lk-media-device-select [data-lk-active=true] > .lk-button',
       // );
