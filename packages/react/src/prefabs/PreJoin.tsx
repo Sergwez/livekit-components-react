@@ -343,15 +343,11 @@ export function PreJoin({
     }
   }
   useEffect(() => {
-    function setBranding() {
+    const observer = new MutationObserver(() => {
       const joinRoom: HTMLElement | null = document.querySelector('.lk-join-button');
       const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
-
-      let pars: {
-        primary_color: string;
-        text_primary_color: string;
-        border_radius: string;
-      } = {
+      console.log(joinRoom)
+      let pars = {
         primary_color: '',
         text_primary_color: '',
         border_radius: '',
@@ -372,11 +368,11 @@ export function PreJoin({
         joinRoom.style.color = textPrimaryColor ?? '';
         joinRoom.style.borderRadius = borderRadius ?? '';
       }
-    }
-    setBranding()
-    window.addEventListener('storage', () => {
-      setBranding()
-    })
+      console.log(parsBrandingData)
+    });
+
+    observer.observe(document, { attributes: true, childList: true, subtree: true });
+    
   }, []);
 
   useWarnAboutMissingStyles();
