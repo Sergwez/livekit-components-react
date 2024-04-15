@@ -343,13 +343,22 @@ export function PreJoin({
     }
   }
   useEffect(() => {
-    const joinRoom = document.querySelector('.lk-join-button');
+    const joinRoom: HTMLElement | null = document.querySelector('.lk-join-button');
+    const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
 
-    const parsBrandingData: any = localStorage.getItem('brandingData');
-    let pars: any;
-    let primaryColor: any;
-    let textPrimaryColor: any;
-    let borderRadius: any;
+    let pars: {
+      primary_color: string;
+      text_primary_color: string;
+      border_radius: string;
+    } = {
+      primary_color: '',
+      text_primary_color: '',
+      border_radius: '',
+    };
+    let primaryColor = '';
+    let textPrimaryColor = '';
+    let borderRadius = '';
+
     if (parsBrandingData) {
       pars = JSON.parse(parsBrandingData);
       primaryColor = pars.primary_color;
@@ -357,12 +366,11 @@ export function PreJoin({
       borderRadius = pars.border_radius;
     }
 
-    // @ts-ignore
-    joinRoom.style.background = primaryColor;
-    // @ts-ignore
-    joinRoom.style.color = textPrimaryColor;
-    // @ts-ignore
-    joinRoom.style.borderRadius = borderRadius;
+    if (joinRoom) {
+      joinRoom.style.background = primaryColor ?? '';
+      joinRoom.style.color = textPrimaryColor ?? '';
+      joinRoom.style.borderRadius = borderRadius ?? '';
+    }
   });
 
   useWarnAboutMissingStyles();
