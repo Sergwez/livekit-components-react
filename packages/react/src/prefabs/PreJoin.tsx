@@ -27,6 +27,13 @@ import { useEffect } from 'react';
  * Props for the PreJoin component.
  * @public
  */
+
+export interface ParsBrandingData{
+  primary_color: string,
+  text_primary_color: string,
+  border_radius: string,
+}
+
 export interface PreJoinProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSubmit' | 'onError'> {
   /** This function is called with the `LocalUserChoices` if validation is passed. */
@@ -44,6 +51,8 @@ export interface PreJoinProps
   micLabel?: string;
   camLabel?: string;
   userLabel?: string;
+  parsBrandingData?: ParsBrandingData
+
   /**
    * If true, user choices are persisted across sessions.
    * @defaultValue true
@@ -202,6 +211,11 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(
  * ```
  * @public
  */
+const parseData = {
+  primary_color: '',
+  text_primary_color: '',
+  border_radius: '',
+}
 export function PreJoin({
   defaults = {},
   onValidate,
@@ -213,6 +227,7 @@ export function PreJoin({
   camLabel = 'Камера',
   userLabel = 'Введите ваше имя',
   persistUserChoices = true,
+  parsBrandingData = parseData,
   ...htmlProps
 }: PreJoinProps) {
   const [userChoices, setUserChoices] = React.useState(defaultUserChoices);
@@ -225,7 +240,7 @@ export function PreJoin({
     ...(defaults.videoEnabled !== undefined && { videoEnabled: defaults.videoEnabled }),
     ...(defaults.username !== undefined && { username: defaults.username }),
   };
-
+  console.log(parsBrandingData)
   const {
     userChoices: initialUserChoices,
     saveAudioInputDeviceId,
@@ -343,36 +358,21 @@ export function PreJoin({
     }
   }
   useEffect(() => {
-    const observer = new MutationObserver(() => {
       const joinRoom: HTMLElement | null = document.querySelector('.lk-join-button');
-      const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
-      console.log(joinRoom)
-      let pars = {
-        primary_color: '',
-        text_primary_color: '',
-        border_radius: '',
-      };
-      let primaryColor = '';
-      let textPrimaryColor = '';
-      let borderRadius = '';
-
-      if (parsBrandingData) {
-        pars = JSON.parse(parsBrandingData);
-        primaryColor = pars.primary_color;
-        textPrimaryColor = pars.text_primary_color;
-        borderRadius = pars.border_radius;
-      }
-
-      if (joinRoom) {
-        joinRoom.style.background = primaryColor ?? '';
-        joinRoom.style.color = textPrimaryColor ?? '';
-        joinRoom.style.borderRadius = borderRadius ?? '';
-      }
+      const lkButton: NodeListOf<HTMLElement> = document.querySelectorAll('.lk-button');
+      lkButton.forEach((key) => {
+        key.style.color = parsBrandingData.primary_color ?? '';
+        key.style.borderRadius = `${parsBrandingData.border_radius}px`;
+        key.style.background = parsBrandingData.primary_color ?? '';
+      });
+      // const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
       console.log(parsBrandingData)
-    });
+      if (joinRoom) {
+        joinRoom.style.background = parsBrandingData.primary_color;
+        joinRoom.style.color = parsBrandingData.text_primary_color;
+        joinRoom.style.borderRadius = parsBrandingData.border_radius;
+      }
 
-    observer.observe(document, { attributes: true, childList: true, subtree: true });
-    
   }, []);
 
   useWarnAboutMissingStyles();
