@@ -29,9 +29,9 @@ import { useEffect } from 'react';
  */
 
 export interface ParsBrandingData{
-  primary_color: string,
-  text_primary_color: string,
-  border_radius: string,
+  primary_color: string | null,
+  text_primary_color: string | null,
+  border_radius: string | null,
 }
 
 export interface PreJoinProps
@@ -367,9 +367,9 @@ export function PreJoin({
       // const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
       console.log(parsBrandingData)
       if (joinRoom) {
-        joinRoom.style.background = parsBrandingData.primary_color;
-        joinRoom.style.color = parsBrandingData.text_primary_color;
-        joinRoom.style.borderRadius = parsBrandingData.border_radius;
+        joinRoom.style.background = parsBrandingData.primary_color as string;
+        joinRoom.style.color = parsBrandingData.text_primary_color as string;
+        joinRoom.style.borderRadius = parsBrandingData.border_radius as string;
       }
 
   }, []);
