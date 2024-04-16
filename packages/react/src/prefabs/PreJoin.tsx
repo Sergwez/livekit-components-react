@@ -442,10 +442,11 @@ export function PreJoin({
         <button
           className="lk-button lk-join-button"
           type="submit"
+          style={{ background: parsBrandingData.primary_color || '#1f8cf9', borderRadius: parsBrandingData.border_radius || '0.5rem'}} 
           onClick={handleSubmit}
           disabled={!isValid}
         >
-          {joinLabel}
+          {parsBrandingData.primary_color}
         </button>
       </form>
 
