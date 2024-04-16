@@ -52,7 +52,7 @@ export function ChatEntry({
     text_primary_color?: string,
     border_radius?: string,
   }
-  const [branding, setBranding] = React.useState<Branding>(
+  const [branding] = React.useState<Branding>(
     JSON.parse(sessionStorage.getItem('brandingData') as string) as Branding
   );
 
