@@ -168,7 +168,7 @@ export function ParticipantTile({
                   ) : (
                     <>
                       <ScreenShareIcon style={{ marginRight: '0.25rem' }} />
-                      <ParticipantName>&apos;s screen</ParticipantName>
+                      <ParticipantName> экран</ParticipantName>
                     </>
                   )}
                 </div>
