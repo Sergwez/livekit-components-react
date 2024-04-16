@@ -126,7 +126,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
           key.style.transitionDelay = '0.1s';
           key.style.transitionDuration = '0.4s';
         } else {
-          key.style.border = `0px solid ${textPrimaryColor}`;
+          key.style.border = `2px solid transparent`;
         }
         // key.style.border = '1px solid #f91f31';
         // key.style.color = primaryColor ?? '';
