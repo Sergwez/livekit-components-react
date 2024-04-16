@@ -164,73 +164,75 @@ export function ControlBar({
   return (
     <div {...htmlProps}>
       <BrandLogo></BrandLogo>
-      {visibleControls.microphone && (
-        <div className="lk-button-group">
+      <div className='lk-button-group-custom'>
+        {visibleControls.microphone && (
+          <div className="lk-button-group">
+            <TrackToggle
+              source={Track.Source.Microphone}
+              showIcon={showIcon}
+              onChange={microphoneOnChange}
+            >
+              {showText && 'Микрофон'}
+            </TrackToggle>
+            <div className="lk-button-group-menu">
+              <MediaDeviceMenu
+                kind="audioinput"
+                onActiveDeviceChange={(_kind, deviceId) => saveAudioInputDeviceId(deviceId ?? '')}
+              />
+            </div>
+          </div>
+        )}
+        {visibleControls.camera && (
+          <div className="lk-button-group">
+            <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}>
+              {showText && 'Камера'}
+            </TrackToggle>
+            <div className="lk-button-group-menu">
+              <MediaDeviceMenu
+                kind="videoinput"
+                onActiveDeviceChange={(_kind, deviceId) => saveVideoInputDeviceId(deviceId ?? '')}
+              />
+            </div>
+          </div>
+        )}
+        {visibleControls.screenShare && browserSupportsScreenSharing && (
           <TrackToggle
-            source={Track.Source.Microphone}
+            className="lk-hidden-mobile"
+            source={Track.Source.ScreenShare}
+            captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
             showIcon={showIcon}
-            onChange={microphoneOnChange}
+            onChange={onScreenShareChange}
           >
-            {showText && 'Микрофон'}
+            {showText &&
+              (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Демонстарция экрана')}
           </TrackToggle>
-          <div className="lk-button-group-menu">
-            <MediaDeviceMenu
-              kind="audioinput"
-              onActiveDeviceChange={(_kind, deviceId) => saveAudioInputDeviceId(deviceId ?? '')}
-            />
-          </div>
-        </div>
-      )}
-      {visibleControls.camera && (
-        <div className="lk-button-group">
-          <TrackToggle source={Track.Source.Camera} showIcon={showIcon} onChange={cameraOnChange}>
-            {showText && 'Камера'}
-          </TrackToggle>
-          <div className="lk-button-group-menu">
-            <MediaDeviceMenu
-              kind="videoinput"
-              onActiveDeviceChange={(_kind, deviceId) => saveVideoInputDeviceId(deviceId ?? '')}
-            />
-          </div>
-        </div>
-      )}
-      {visibleControls.screenShare && browserSupportsScreenSharing && (
-        <TrackToggle
-          className="lk-hidden-mobile"
-          source={Track.Source.ScreenShare}
-          captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
-          showIcon={showIcon}
-          onChange={onScreenShareChange}
-        >
-          {showText &&
-            (isScreenShareEnabled ? 'Завершить демонстрацию экрана' : 'Демонстарция экрана')}
-        </TrackToggle>
-      )}
-      {visibleControls.record && (
-        <RecordButton>
-          { showIcon && record ? <RecordCircleIcon fill={'red'} /> : <RecordCircleDisabledIcon />}
-          {showText && 'Запись'}
-        </RecordButton>
-      )}
-      {visibleControls.chat && (
-        <ChatToggle>
-          {showIcon && <ChatIcon />}
-          {showText && 'Чат'}
-        </ChatToggle>
-      )}
-      {visibleControls.settings && (
-        <SettingsMenuToggle>
-          {showIcon && <GearIcon />}
-          {showText && 'Настройки'}
-        </SettingsMenuToggle>
-      )}
-      {visibleControls.leave && (
-        <DisconnectButton>
-          {showIcon && <LeaveIcon />}
-          {showText && 'Выход'}
-        </DisconnectButton>
-      )}
-      <StartMediaButton />
+        )}
+        {visibleControls.record && (
+          <RecordButton>
+            { showIcon && record ? <RecordCircleIcon fill={'red'} /> : <RecordCircleDisabledIcon />}
+            {showText && 'Запись'}
+          </RecordButton>
+        )}
+        {visibleControls.chat && (
+          <ChatToggle>
+            {showIcon && <ChatIcon />}
+            {showText && 'Чат'}
+          </ChatToggle>
+        )}
+        {visibleControls.settings && (
+          <SettingsMenuToggle>
+            {showIcon && <GearIcon />}
+            {showText && 'Настройки'}
+          </SettingsMenuToggle>
+        )}
+        {visibleControls.leave && (
+          <DisconnectButton>
+            {showIcon && <LeaveIcon />}
+            {showText && 'Выход'}
+          </DisconnectButton>
+        )}
+        <StartMediaButton />
+      </div>
     </div>
   );
 }

@@ -44,8 +44,8 @@
   align-items: stretch;
 
   > .button:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 }
 
@@ -55,8 +55,8 @@
 
   > .button {
     height: 100%;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 
     &::after {
       margin-left: 0;
