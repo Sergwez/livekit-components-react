@@ -75,7 +75,7 @@ export function ControlBar({
       setIsChatOpen(layoutContext?.widget.state?.showChat);
     }
   }, [layoutContext?.widget.state?.showChat]);
-  const isTooLittleSpace = useMediaQuery(`(max-width: ${isChatOpen ? 1000 : 890}px)`);
+  const isTooLittleSpace = useMediaQuery(`(max-width: ${isChatOpen ? 1260 : 1060}px)`);
 
   const defaultVariation = isTooLittleSpace ? 'minimal' : 'verbose';
   variation ??= defaultVariation;
