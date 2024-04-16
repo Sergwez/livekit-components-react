@@ -80,7 +80,7 @@ export function ChatEntry({
         </span>
       )}
 
-      <span className="lk-message-body" style={{background: branding?.primary_color as string}}>{formattedMessage}</span>
+      <span className="lk-message-body" style={entry.from?.isLocal ? {} : {background: branding?.primary_color as string}}>{formattedMessage}</span>
     </li>
   );
 }
