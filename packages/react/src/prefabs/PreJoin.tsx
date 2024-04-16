@@ -212,9 +212,9 @@ export function usePreviewDevice<T extends LocalVideoTrack | LocalAudioTrack>(
  * @public
  */
 const parseData = {
-  primary_color: '',
-  text_primary_color: '',
-  border_radius: '',
+  primary_color: null,
+  text_primary_color: null,
+  border_radius: null,
 }
 export function PreJoin({
   defaults = {},
