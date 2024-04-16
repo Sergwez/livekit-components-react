@@ -48,12 +48,12 @@ export function ChatEntry({
   const locale = navigator ? navigator.language : 'en-US';
 
   interface Branding {
-    primary_color: string
-    text_primary_color: string,
-    border_radius: string,
+    primary_color?: string
+    text_primary_color?: string,
+    border_radius?: string,
   }
   const [branding, setBranding] = React.useState<Branding>(
-    JSON.parse(sessionStorage.getItem('brandingData')) as Branding
+    JSON.parse(sessionStorage.getItem('brandingData') as string) as Branding
   );
 
   return (
@@ -80,7 +80,7 @@ export function ChatEntry({
         </span>
       )}
 
-      <span className="lk-message-body" style={{background: branding.primary_color}}>{formattedMessage}</span>
+      <span className="lk-message-body" style={{background: branding?.primary_color as string}}>{formattedMessage}</span>
     </li>
   );
 }
