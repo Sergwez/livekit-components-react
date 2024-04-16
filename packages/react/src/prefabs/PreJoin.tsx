@@ -363,7 +363,6 @@ export function PreJoin({
       lkButton.forEach((key) => {
         key.style.color = parsBrandingData.primary_color ?? '';
         key.style.borderRadius = `${parsBrandingData.border_radius}px`;
-        key.style.background = parsBrandingData.primary_color ?? '';
       });
       // const parsBrandingData: string | null = sessionStorage.getItem('brandingData');
       console.log(parsBrandingData)
@@ -428,7 +427,7 @@ export function PreJoin({
         </div>
       </div>
 
-      <form className="lk-username-container">
+      {parsBrandingData?.primary_color && (<form className="lk-username-container">
         <input
           className="lk-form-control"
           id="username"
@@ -446,9 +445,9 @@ export function PreJoin({
           onClick={handleSubmit}
           disabled={!isValid}
         >
-          {parsBrandingData.primary_color}
+          {joinLabel}
         </button>
-      </form>
+      </form>)}
 
       {debug && (
         <>
