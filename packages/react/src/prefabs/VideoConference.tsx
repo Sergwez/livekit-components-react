@@ -155,7 +155,7 @@ export function VideoConference({
           {SettingsComponent && (
             <div
               className="lk-settings-menu-modal"
-              style={{ display: widgetState.showSettings ? 'block' : 'block' }}
+              style={{ display: widgetState.showSettings ? 'block' : 'none' }}
             >
               <SettingsComponent />
             </div>
