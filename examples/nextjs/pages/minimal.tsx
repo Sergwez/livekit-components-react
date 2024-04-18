@@ -3,6 +3,7 @@ import { RoomConnectOptions } from 'livekit-client';
 import type { NextPage } from 'next';
 import { generateRandomUserId } from '../lib/helper';
 import { useMemo } from 'react';
+import prejoin from './prejoin';
 
 const MinimalExample: NextPage = () => {
   const params = typeof window !== 'undefined' ? new URLSearchParams(location.search) : null;
@@ -35,7 +36,8 @@ const MinimalExample: NextPage = () => {
           );
         }}
       >
-        <VideoConference />
+        <VideoConference SettingsComponent={prejoin} > 
+          </VideoConference>
       </LiveKitRoom>
     </div>
   );

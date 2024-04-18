@@ -121,7 +121,7 @@ export function TrackToggle<T extends ToggleSource>({ showIcon, ...props }: Trac
       lkParticipantTile.forEach((key) => {
         const dataSpeaking: string | null = key.getAttribute('data-lk-speaking');
         if (dataSpeaking === 'true') {
-          key.style.border = `2px solid ${textPrimaryColor}`;
+          key.style.border = `2px solid ${primaryColor}`;
           key.style.transitionProperty = 'border';
           key.style.transitionDelay = '0.1s';
           key.style.transitionDuration = '0.4s';
