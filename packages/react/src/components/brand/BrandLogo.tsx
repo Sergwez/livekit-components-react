@@ -17,7 +17,7 @@ export class BrandLogo extends React.Component {
       <div className="lk-branding_style">
         <img
           src={logoUrl}
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: 'auto', height: '50px' }}
           alt="From API"
         />
       </div>
